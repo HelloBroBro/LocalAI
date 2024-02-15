@@ -8,7 +8,7 @@ GOLLAMA_VERSION?=aeba71ee842819da681ea537e78846dc75949ac0
 
 GOLLAMA_STABLE_VERSION?=50cee7712066d9e38306eccadcfbb44ea87df4b7
 
-CPPLLAMA_VERSION?=099afc6274c859ca67146e725839f2d97a5ef313
+CPPLLAMA_VERSION?=f026f8120f97090d34a52b3dc023c82e0ede3f7d
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -550,4 +550,4 @@ docker-image-intel:
 		--build-arg BASE_IMAGE=intel/oneapi-basekit:2024.0.1-devel-ubuntu22.04 \
 		--build-arg IMAGE_TYPE=$(IMAGE_TYPE) \
 		--build-arg GO_TAGS="none" \
-		--build-arg BUILD_TYPE=sycl_f16 -t $(DOCKER_IMAGE) .
+		--build-arg BUILD_TYPE=sycl_f32 -t $(DOCKER_IMAGE) .
