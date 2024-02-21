@@ -1,4 +1,4 @@
-package api_config
+package config
 
 import (
 	"errors"
@@ -148,6 +148,7 @@ type Functions struct {
 	DisableNoAction         bool   `yaml:"disable_no_action"`
 	NoActionFunctionName    string `yaml:"no_action_function_name"`
 	NoActionDescriptionName string `yaml:"no_action_description_name"`
+	ParallelCalls           bool   `yaml:"parallel_calls"`
 }
 
 type TemplateConfig struct {
