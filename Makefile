@@ -8,7 +8,7 @@ GOLLAMA_VERSION?=aeba71ee842819da681ea537e78846dc75949ac0
 
 GOLLAMA_STABLE_VERSION?=50cee7712066d9e38306eccadcfbb44ea87df4b7
 
-CPPLLAMA_VERSION?=fd43d66f46ee3b5345fb8a74a252d86ccd34a409
+CPPLLAMA_VERSION?=9e359a4f47c1b2dceb99e29706c9f7403d32ab5e
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -250,7 +250,7 @@ sources/go-piper/libpiper_binding.a: sources/go-piper
 	$(MAKE) -C sources/go-piper libpiper_binding.a example/main
 
 backend/cpp/llama/llama.cpp:
-	LLAMA_VERSION=$(CPPLLAMA_VERSION) $(MAKE) -C backend/cpp/llama llama.cpp	
+	LLAMA_VERSION=$(CPPLLAMA_VERSION) $(MAKE) -C backend/cpp/llama llama.cpp
 
 get-sources: backend/cpp/llama/llama.cpp sources/go-llama sources/go-llama-ggml sources/gpt4all sources/go-piper sources/go-rwkv sources/whisper.cpp sources/go-bert sources/go-stable-diffusion sources/go-tiny-dream
 	touch $@
@@ -482,7 +482,7 @@ ifdef BUILD_GRPC_FOR_BACKEND_LLAMA
 	CMAKE_ARGS="${CMAKE_ARGS} ${ADDED_CMAKE_ARGS}" LLAMA_VERSION=$(CPPLLAMA_VERSION) $(MAKE) -C backend/cpp/llama grpc-server
 else
 	echo "BUILD_GRPC_FOR_BACKEND_LLAMA is not defined."
-	LLAMA_VERSION=$(CPPLLAMA_VERSION) $(MAKE) -C backend/cpp/llama grpc-server			
+	LLAMA_VERSION=$(CPPLLAMA_VERSION) $(MAKE) -C backend/cpp/llama grpc-server
 endif
 ## BACKEND CPP LLAMA END
 
@@ -516,6 +516,7 @@ backend-assets/grpc/langchain-huggingface: backend-assets/grpc
 
 backend-assets/grpc/stablediffusion: backend-assets/grpc
 	if [ ! -f backend-assets/grpc/stablediffusion ]; then \
+		$(MAKE) sources/go-stable-diffusion; \
 		$(MAKE) sources/go-stable-diffusion/libstablediffusion.a; \
 		CGO_LDFLAGS="$(CGO_LDFLAGS)" C_INCLUDE_PATH=$(CURDIR)/sources/go-stable-diffusion/ LIBRARY_PATH=$(CURDIR)/sources/go-stable-diffusion/ \
 		$(GOCMD) build -ldflags "$(LD_FLAGS)" -tags "$(GO_TAGS)" -o backend-assets/grpc/stablediffusion ./backend/go/image/stablediffusion; \
