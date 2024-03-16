@@ -8,7 +8,7 @@ GOLLAMA_VERSION?=6a8041ef6b46d4712afc3ae791d1c2d73da0ad1c
 
 GOLLAMA_STABLE_VERSION?=50cee7712066d9e38306eccadcfbb44ea87df4b7
 
-CPPLLAMA_VERSION?=19885d205e768579ab090d1e99281cae58c21b54
+CPPLLAMA_VERSION?=4755afd1cbd40d93c017e5b98c39796f52345314
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -25,7 +25,7 @@ WHISPER_CPP_VERSION?=37a709f6558c6d9783199e2b8cbb136e1c41d346
 BERT_VERSION?=6abe312cded14042f6b7c3cd8edf082713334a4d
 
 # go-piper version
-PIPER_VERSION?=d6b6275ba037dabdba4a8b65dfdf6b2a73a67f07
+PIPER_VERSION?=9d0100873a7dbb0824dfea40e8cec70a1b110759
 
 # stablediffusion version
 STABLEDIFFUSION_VERSION?=362df9da29f882dbf09ade61972d16a1f53c3485
@@ -462,9 +462,6 @@ backend-assets/grpc/llama: backend-assets/grpc sources/go-llama/libbinding.a
 	CGO_LDFLAGS="$(CGO_LDFLAGS)" C_INCLUDE_PATH=$(CURDIR)/sources/go-llama LIBRARY_PATH=$(CURDIR)/sources/go-llama \
 	$(GOCMD) build -ldflags "$(LD_FLAGS)" -tags "$(GO_TAGS)" -o backend-assets/grpc/llama ./backend/go/llm/llama/
 # TODO: every binary should have its own folder instead, so can have different  implementations
-ifeq ($(BUILD_TYPE),metal)
-	cp backend/cpp/llama/llama.cpp/ggml-common.h backend-assets/grpc/
-endif
 
 ## BACKEND CPP LLAMA START
 # Sets the variables in case it has to build the gRPC locally.
@@ -494,7 +491,7 @@ backend-assets/grpc/llama-cpp: backend-assets/grpc backend/cpp/llama/grpc-server
 	cp -rfv backend/cpp/llama/grpc-server backend-assets/grpc/llama-cpp
 # TODO: every binary should have its own folder instead, so can have different metal implementations
 ifeq ($(BUILD_TYPE),metal)
-	cp backend/cpp/llama/llama.cpp/build/bin/ggml-common.h backend-assets/grpc/
+	cp backend/cpp/llama/llama.cpp/build/bin/default.metallib backend-assets/grpc/
 endif
 
 backend-assets/grpc/llama-ggml: backend-assets/grpc sources/go-llama-ggml/libbinding.a
