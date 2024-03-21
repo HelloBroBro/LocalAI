@@ -5,7 +5,7 @@ BINARY_NAME=local-ai
 
 # llama.cpp versions
 GOLLAMA_STABLE_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=2d15886bb092c3b780c676b5cc57ff3337af9c83
+CPPLLAMA_VERSION?=1c51f98adcbad40e3c41f0a6ffadeb723190b417
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -16,7 +16,7 @@ RWKV_REPO?=https://github.com/donomii/go-rwkv.cpp
 RWKV_VERSION?=661e7ae26d442f5cfebd2a0881b44e8c55949ec6
 
 # whisper.cpp version
-WHISPER_CPP_VERSION?=e7794a868ffb53f5299125aaaf74fbcad93cd06c
+WHISPER_CPP_VERSION?=79d5765e7e1a904d976adfd5636da7da43163eb3
 
 # bert.cpp version
 BERT_VERSION?=6abe312cded14042f6b7c3cd8edf082713334a4d
@@ -535,6 +535,8 @@ backend-assets/grpc/whisper: sources/whisper.cpp sources/whisper.cpp/libwhisper.
 grpcs: prepare $(GRPC_BACKENDS)
 
 DOCKER_IMAGE?=local-ai
+DOCKER_AIO_IMAGE?=local-ai-aio
+DOCKER_AIO_SIZE?=cpu
 IMAGE_TYPE?=core
 BASE_IMAGE?=ubuntu:22.04
 
@@ -545,6 +547,18 @@ docker:
 		--build-arg GO_TAGS=$(GO_TAGS) \
 		--build-arg BUILD_TYPE=$(BUILD_TYPE) \
 		-t $(DOCKER_IMAGE) .
+	
+docker-aio:
+	@echo "Building AIO image with size $(DOCKER_AIO_SIZE)"
+	@echo "Building AIO image with base image $(BASE_IMAGE)"
+	docker build \
+		--build-arg BASE_IMAGE=$(BASE_IMAGE) \
+		--build-arg SIZE=$(DOCKER_AIO_SIZE) \
+		-t $(DOCKER_AIO_IMAGE) -f Dockerfile.aio .
+
+docker-aio-all:
+	$(MAKE) docker-aio DOCKER_AIO_SIZE=cpu
+	$(MAKE) docker-aio DOCKER_AIO_SIZE=cpu
 
 docker-image-intel:
 	docker build \
