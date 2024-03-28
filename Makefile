@@ -5,7 +5,7 @@ BINARY_NAME=local-ai
 
 # llama.cpp versions
 GOLLAMA_STABLE_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=557410b8f06380560155ac7fcb8316d71ddc9837
+CPPLLAMA_VERSION?=a016026a3ac16d8c9b993a3573f19b9556d67de4
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -16,7 +16,7 @@ RWKV_REPO?=https://github.com/donomii/go-rwkv.cpp
 RWKV_VERSION?=661e7ae26d442f5cfebd2a0881b44e8c55949ec6
 
 # whisper.cpp version
-WHISPER_CPP_VERSION?=1558ec5a16cb2b2a0bf54815df1d41f83dc3815b
+WHISPER_CPP_VERSION?=2948c740a2bf43190b8e3badb6f1e147f11f96d1
 
 # bert.cpp version
 BERT_VERSION?=6abe312cded14042f6b7c3cd8edf082713334a4d
@@ -28,7 +28,7 @@ PIPER_VERSION?=9d0100873a7dbb0824dfea40e8cec70a1b110759
 STABLEDIFFUSION_VERSION?=362df9da29f882dbf09ade61972d16a1f53c3485
 
 # tinydream version
-TINYDREAM_VERSION?=772a9c0d9aaf768290e63cca3c904fe69faf677a
+TINYDREAM_VERSION?=22a12a4bc0ac5455856f28f3b771331a551a4293
 
 export BUILD_TYPE?=
 export STABLE_BUILD_TYPE?=$(BUILD_TYPE)
@@ -224,7 +224,7 @@ sources/go-stable-diffusion:
 	cd sources/go-stable-diffusion && git checkout -b build $(STABLEDIFFUSION_VERSION) && git submodule update --init --recursive --depth 1
 
 sources/go-stable-diffusion/libstablediffusion.a: sources/go-stable-diffusion
-	$(MAKE) -C sources/go-stable-diffusion libstablediffusion.a
+	CPATH="$(CPATH):/usr/include/opencv4" $(MAKE) -C sources/go-stable-diffusion libstablediffusion.a
 
 ## tiny-dream
 sources/go-tiny-dream:
@@ -263,6 +263,7 @@ dropreplace:
 	$(GOCMD) mod edit -dropreplace github.com/mudler/go-piper
 	$(GOCMD) mod edit -dropreplace github.com/mudler/go-stable-diffusion
 	$(GOCMD) mod edit -dropreplace github.com/nomic-ai/gpt4all/gpt4all-bindings/golang
+	$(GOCMD) mod edit -dropreplace github.com/go-skynet/go-llama.cpp
 
 prepare-sources: get-sources replace
 	$(GOCMD) mod download
@@ -531,7 +532,7 @@ backend-assets/grpc/rwkv: sources/go-rwkv sources/go-rwkv/librwkv.a backend-asse
 	$(GOCMD) build -ldflags "$(LD_FLAGS)" -tags "$(GO_TAGS)" -o backend-assets/grpc/rwkv ./backend/go/llm/rwkv
 
 backend-assets/grpc/stablediffusion: sources/go-stable-diffusion sources/go-stable-diffusion/libstablediffusion.a backend-assets/grpc
-	CGO_LDFLAGS="$(CGO_LDFLAGS)" C_INCLUDE_PATH=$(CURDIR)/sources/go-stable-diffusion/ LIBRARY_PATH=$(CURDIR)/sources/go-stable-diffusion/ \
+	CGO_LDFLAGS="$(CGO_LDFLAGS)" CPATH="$(CPATH):$(CURDIR)/sources/go-stable-diffusion/:/usr/include/opencv4" LIBRARY_PATH=$(CURDIR)/sources/go-stable-diffusion/ \
 	$(GOCMD) build -ldflags "$(LD_FLAGS)" -tags "$(GO_TAGS)" -o backend-assets/grpc/stablediffusion ./backend/go/image/stablediffusion
 
 backend-assets/grpc/tinydream: sources/go-tiny-dream sources/go-tiny-dream/libtinydream.a backend-assets/grpc
@@ -556,7 +557,7 @@ docker:
 	docker build \
 		--build-arg BASE_IMAGE=$(BASE_IMAGE) \
 		--build-arg IMAGE_TYPE=$(IMAGE_TYPE) \
-		--build-arg GO_TAGS=$(GO_TAGS) \
+		--build-arg GO_TAGS="$(GO_TAGS)" \
 		--build-arg BUILD_TYPE=$(BUILD_TYPE) \
 		-t $(DOCKER_IMAGE) .
 	

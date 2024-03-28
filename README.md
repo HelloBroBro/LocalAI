@@ -50,14 +50,12 @@
 
 [Roadmap](https://github.com/mudler/LocalAI/issues?q=is%3Aissue+is%3Aopen+label%3Aroadmap)
 
+- Openvino support: https://github.com/mudler/LocalAI/pull/1892
 - Vector store: https://github.com/mudler/LocalAI/pull/1795
 - All-in-one container image: https://github.com/mudler/LocalAI/issues/1855
-- Parallel function calling: https://github.com/mudler/LocalAI/pull/1726
+- Parallel function calling: https://github.com/mudler/LocalAI/pull/1726 / Tools API support: https://github.com/mudler/LocalAI/pull/1715
 - Upload file API: https://github.com/mudler/LocalAI/pull/1703
-- Tools API support: https://github.com/mudler/LocalAI/pull/1715
-- LLaVa 1.6: https://github.com/mudler/LocalAI/pull/1714
-- ROCm container images: https://github.com/mudler/LocalAI/pull/1595
-- Intel GPU support (sycl, transformers, diffusers): https://github.com/mudler/LocalAI/issues/1653
+- ROCm container images: https://github.com/mudler/LocalAI/pull/1595 / Intel GPU support (sycl, transformers, diffusers): https://github.com/mudler/LocalAI/issues/1653
 - Mamba support: https://github.com/mudler/LocalAI/pull/1589
 - Start and share models with config file: https://github.com/mudler/LocalAI/pull/1522
 - 🐸 Coqui: https://github.com/mudler/LocalAI/pull/1489
@@ -81,7 +79,7 @@ For those in a hurry, here's a straightforward one-liner to launch a LocalAI AIO
 ```bash
 docker run -ti --name local-ai -p 8080:8080 localai/localai:latest-aio-cpu
 # or, if you have an Nvidia GPU:
-# docker run -ti --name local-ai -p 8080:8080 --gpus all localai/localai:latest-aio-gpu-cuda12
+# docker run -ti --name local-ai -p 8080:8080 --gpus all localai/localai:latest-aio-gpu-nvidia-cuda-12
 ```
 
 ## 🚀 [Features](https://localai.io/features/)
