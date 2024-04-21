@@ -140,6 +140,7 @@ type LLMConfig struct {
 	EnforceEager         bool    `yaml:"enforce_eager"`          // vLLM
 	SwapSpace            int     `yaml:"swap_space"`             // vLLM
 	MaxModelLen          int     `yaml:"max_model_len"`          // vLLM
+	TensorParallelSize   int     `yaml:"tensor_parallel_size"`          // vLLM
 	MMProj               string  `yaml:"mmproj"`
 
 	RopeScaling string `yaml:"rope_scaling"`
@@ -204,15 +205,15 @@ func (cfg *BackendConfig) SetDefaults(opts ...ConfigLoaderOption) {
 	defaultTopP := 0.95
 	defaultTopK := 40
 	defaultTemp := 0.9
-	defaultMaxTokens := 2048
 	defaultMirostat := 2
 	defaultMirostatTAU := 5.0
 	defaultMirostatETA := 0.1
 	defaultTypicalP := 1.0
 	defaultTFZ := 1.0
+	defaultInfinity := -1
 
 	// Try to offload all GPU layers (if GPU is found)
-	defaultNGPULayers := 99999999
+	defaultHigh := 99999999
 
 	trueV := true
 	falseV := false
@@ -253,7 +254,7 @@ func (cfg *BackendConfig) SetDefaults(opts ...ConfigLoaderOption) {
 	}
 
 	if cfg.Maxtokens == nil {
-		cfg.Maxtokens = &defaultMaxTokens
+		cfg.Maxtokens = &defaultInfinity
 	}
 
 	if cfg.Mirostat == nil {
@@ -268,7 +269,7 @@ func (cfg *BackendConfig) SetDefaults(opts ...ConfigLoaderOption) {
 		cfg.MirostatTAU = &defaultMirostatTAU
 	}
 	if cfg.NGPULayers == nil {
-		cfg.NGPULayers = &defaultNGPULayers
+		cfg.NGPULayers = &defaultHigh
 	}
 
 	if cfg.LowVRAM == nil {
