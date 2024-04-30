@@ -5,7 +5,7 @@ BINARY_NAME=local-ai
 
 # llama.cpp versions
 GOLLAMA_STABLE_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=7bb36ccf91b8a2e92b182dd75624f1fd7cb205ac
+CPPLLAMA_VERSION?=b8c1476e44cc1f3a1811613f65251cf779067636
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -16,7 +16,7 @@ RWKV_REPO?=https://github.com/donomii/go-rwkv.cpp
 RWKV_VERSION?=661e7ae26d442f5cfebd2a0881b44e8c55949ec6
 
 # whisper.cpp version
-WHISPER_CPP_VERSION?=22b6598cc9f1454567efa0d816fdc57637243999
+WHISPER_CPP_VERSION?=8fac6455ffeb0a0950a84e790ddb74f7290d33c4
 
 # bert.cpp version
 BERT_VERSION?=6abe312cded14042f6b7c3cd8edf082713334a4d
@@ -28,7 +28,7 @@ PIPER_VERSION?=9d0100873a7dbb0824dfea40e8cec70a1b110759
 STABLEDIFFUSION_VERSION?=433ea6d9b64d9d08067324a757ef07040ea29568
 
 # tinydream version
-TINYDREAM_VERSION?=22a12a4bc0ac5455856f28f3b771331a551a4293
+TINYDREAM_VERSION?=c04fa463ace9d9a6464313aa5f9cd0f953b6c057
 
 export BUILD_TYPE?=
 export STABLE_BUILD_TYPE?=$(BUILD_TYPE)
@@ -240,7 +240,7 @@ sources/whisper.cpp:
 	cd sources/whisper.cpp && git checkout -b build $(WHISPER_CPP_VERSION) && git submodule update --init --recursive --depth 1
 
 sources/whisper.cpp/libwhisper.a: sources/whisper.cpp
-	cd sources/whisper.cpp && make libwhisper.a
+	cd sources/whisper.cpp && $(MAKE) libwhisper.a
 
 get-sources: sources/go-llama.cpp sources/gpt4all sources/go-piper sources/go-rwkv.cpp sources/whisper.cpp sources/go-bert.cpp sources/go-stable-diffusion sources/go-tiny-dream
 
