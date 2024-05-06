@@ -97,6 +97,22 @@
       sha256: b7bad45618e2a76cc1e89a0fbb93a2cac9bf410e27a619c8024ed6db53aa9b4a
       uri: huggingface://QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/Meta-Llama-3-8B-Instruct.Q6_K.gguf
 - <<: *llama3
+  name: "llama-3-8b-instruct-coder"
+  icon: https://cdn-uploads.huggingface.co/production/uploads/642cc1c253e76b4c2286c58e/0O4cIuv3wNbY68-FP7tak.jpeg
+  urls:
+    - https://huggingface.co/bartowski/Llama-3-8B-Instruct-Coder-GGUF
+    - https://huggingface.co/rombodawg/Llama-3-8B-Instruct-Coder
+  description: |
+    Original model: https://huggingface.co/rombodawg/Llama-3-8B-Instruct-Coder
+    All quants made using imatrix option with dataset provided by Kalomaze here
+  overrides:
+    parameters:
+      model: Llama-3-8B-Instruct-Coder-Q4_K_M.gguf
+  files:
+    - filename: Llama-3-8B-Instruct-Coder-Q4_K_M.gguf
+      sha256: 639ab8e3aeb7aa82cff6d8e6ef062d1c3e5a6d13e6d76e956af49f63f0e704f8
+      uri: huggingface://bartowski/Llama-3-8B-Instruct-Coder-GGUF/Llama-3-8B-Instruct-Coder-Q4_K_M.gguf
+- <<: *llama3
   name: "llama3-70b-instruct"
   overrides:
     parameters:
@@ -322,6 +338,24 @@
       sha256: 9e98cd2672f716a0872912fdc4877969efd14d6f682f28e156f8591591c00d9c
       uri: huggingface://Lewdiculous/Average_Normie_l3_v1_8B-GGUF-IQ-Imatrix/Average_Normie_l3_v1_8B-Q4_K_M-imat.gguf
 - <<: *llama3
+  name: "openbiollm-llama3-8b"
+  urls:
+    - https://huggingface.co/aaditya/OpenBioLLM-Llama3-8B-GGUF
+    - https://huggingface.co/aaditya/Llama3-OpenBioLLM-8B
+  license: llama3
+  icon: https://cdn-uploads.huggingface.co/production/uploads/5f3fe13d79c1ba4c353d0c19/KGmRE5w2sepNtwsEu8t7K.jpeg
+  description: |
+    Introducing OpenBioLLM-8B: A State-of-the-Art Open Source Biomedical Large Language Model
+
+    OpenBioLLM-8B is an advanced open source language model designed specifically for the biomedical domain. Developed by Saama AI Labs, this model leverages cutting-edge techniques to achieve state-of-the-art performance on a wide range of biomedical tasks.
+  overrides:
+    parameters:
+      model: openbiollm-llama3-8b.Q4_K_M.gguf
+  files:
+    - filename: openbiollm-llama3-8b.Q4_K_M.gguff
+      sha256: 806fa724139b6a2527e33a79c25a13316188b319d4eed33e20914d7c5955d349
+      uri: huggingface://aaditya/OpenBioLLM-Llama3-8B-GGUF/openbiollm-llama3-8b.Q4_K_M.gguf
+- <<: *llama3
   name: "llama-3-8b-lexifun-uncensored-v1"
   icon: "https://cdn-uploads.huggingface.co/production/uploads/644ad182f434a6a63b18eee6/GrOs1IPG5EXR3MOCtcQiz.png"
   license: llama3
@@ -406,6 +440,25 @@
     - filename: Aura_Uncensored_l3_8B-Q4_K_M-imat.gguf
       sha256: 265ded6a4f439bec160f394e3083a4a20e32ebb9d1d2d85196aaab23dab87fb2
       uri: huggingface://Lewdiculous/Aura_Uncensored_l3_8B-GGUF-IQ-Imatrix/Aura_Uncensored_l3_8B-Q4_K_M-imat.gguf
+- <<: *llama3
+  name: "llama-3-lumimaid-8b-v0.1"
+  urls:
+    - https://huggingface.co/NeverSleep/Llama-3-Lumimaid-8B-v0.1-GGUF
+  icon: https://cdn-uploads.huggingface.co/production/uploads/630dfb008df86f1e5becadc3/d3QMaxy3peFTpSlWdWF-k.png
+  license: cc-by-nc-4.0
+  description: |
+      This model uses the Llama3 prompting format
+
+      Llama3 trained on our RP datasets, we tried to have a balance between the ERP and the RP, not too horny, but just enough.
+
+      We also added some non-RP dataset, making the model less dumb overall. It should look like a 40%/60% ratio for Non-RP/RP+ERP data.
+  overrides:
+    parameters:
+      model: Llama-3-Lumimaid-8B-v0.1.q4_k_m.gguf
+  files:
+    - filename: Llama-3-Lumimaid-8B-v0.1.q4_k_m.gguf
+      sha256: 23ac0289da0e096d5c00f6614dfd12c94dceecb02c313233516dec9225babbda
+      uri: huggingface://NeverSleep/Llama-3-Lumimaid-8B-v0.1-GGUF/Llama-3-Lumimaid-8B-v0.1.q4_k_m.gguf
 - <<: *llama3
   name: "suzume-llama-3-8B-multilingual"
   urls:
@@ -631,7 +684,9 @@
       sha256: 09c230de47f6f843e4841656f7895cac52c6e7ec7392acb5e8527de8b775c45a
       uri: huggingface://jartine/llava-v1.5-7B-GGUF/llava-v1.5-7b-mmproj-Q8_0.gguf
 - <<: *llama3
-  name: "poppy_porpoise-v0.7-l3-8b-iq-imatrix"
+  name: "poppy_porpoise-v0.72-l3-8b-iq-imatrix"
+  urls:
+    - https://huggingface.co/Lewdiculous/Poppy_Porpoise-0.72-L3-8B-GGUF-IQ-Imatrix
   description: |
       "Poppy Porpoise" is a cutting-edge AI roleplay assistant based on the Llama 3 8B model, specializing in crafting unforgettable narrative experiences. With its advanced language capabilities, Poppy expertly immerses users in an interactive and engaging adventure, tailoring each adventure to their individual preferences.
 
@@ -646,16 +701,16 @@
     - cpu
     - llava-1.5
   overrides:
-    mmproj: Llava_1.5_Llama3_mmproj.gguf
+    mmproj: Llava_1.5_Llama3_mmproj_updated.gguf
     parameters:
-      model: Poppy_Porpoise-v0.7-L3-8B-Q4_K_M-imat.gguf
+      model: Poppy_Porpoise-0.72-L3-8B-Q4_K_M-imat.gguf
   files:
-    - filename: Poppy_Porpoise-v0.7-L3-8B-Q4_K_M-imat.gguf
-      sha256: 04badadd6c88cd9c706efef8f5cd337057c805e43dd440a5936f87720c37eb33
-      uri: huggingface://Lewdiculous/Poppy_Porpoise-v0.7-L3-8B-GGUF-IQ-Imatrix/Poppy_Porpoise-v0.7-L3-8B-Q4_K_M-imat.gguf
-    - filename: Llava_1.5_Llama3_mmproj.gguf
-      sha256: d2a9ca943975f6c49c4d55886e873f676a897cff796e92410ace6c20f4efd03b
-      uri: huggingface://ChaoticNeutrals/Llava_1.5_Llama3_mmproj/mmproj-model-f16.gguf
+    - filename: Poppy_Porpoise-0.72-L3-8B-Q4_K_M-imat.gguf
+      sha256: 53743717f929f73aa4355229de114d9b81814cb2e83c6cc1c6517844da20bfd5
+      uri: huggingface://Lewdiculous/Poppy_Porpoise-0.72-L3-8B-GGUF-IQ-Imatrix/Poppy_Porpoise-0.72-L3-8B-Q4_K_M-imat.gguf
+    - filename: Llava_1.5_Llama3_mmproj_updated.gguf
+      sha256: 4f2bb77ca60f2c932d1c6647d334f5d2cd71966c19e850081030c9883ef1906c
+      uri: https://huggingface.co/ChaoticNeutrals/LLaVA-Llama-3-8B-mmproj-Updated/resolve/main/llava-v1.5-8B-Updated-Stop-Token/mmproj-model-f16.gguf
 - <<: *llama3
   name: "llava-llama-3-8b-v1_1"
   description: |

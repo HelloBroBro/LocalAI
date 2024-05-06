@@ -5,7 +5,7 @@ BINARY_NAME=local-ai
 
 # llama.cpp versions
 GOLLAMA_STABLE_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=842500144ee02c8b0a46d2cc43880f8d80998fa5
+CPPLLAMA_VERSION?=628b299106d1e9476fdecb3cbe546bf5c60f1b89
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -321,7 +321,12 @@ build-api:
 
 dist: build
 	mkdir -p release
+# if BUILD_ID is empty, then we don't append it to the binary name
+ifeq ($(BUILD_ID),)
+	cp $(BINARY_NAME) release/$(BINARY_NAME)-$(OS)-$(ARCH)
+else
 	cp $(BINARY_NAME) release/$(BINARY_NAME)-$(BUILD_ID)-$(OS)-$(ARCH)
+endif
 
 osx-signed: build
 	codesign --deep --force --sign "$(OSX_SIGNING_IDENTITY)" --entitlements "./Entitlements.plist" "./$(BINARY_NAME)"
