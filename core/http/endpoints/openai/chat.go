@@ -81,7 +81,7 @@ func ChatEndpoint(cl *config.BackendConfigLoader, ml *model.ModelLoader, startup
 			}
 			responses <- initialMessage
 
-			result, err := handleQuestion(config, req, ml, startupOptions, results, prompt)
+			result, err := handleQuestion(config, req, ml, startupOptions, results, result, prompt)
 			if err != nil {
 				log.Error().Err(err).Msg("error handling question")
 				return
@@ -349,7 +349,12 @@ func ChatEndpoint(cl *config.BackendConfigLoader, ml *model.ModelLoader, startup
 				mess = append(mess, content)
 			}
 
-			predInput = strings.Join(mess, "\n")
+			joinCharacter := "\n"
+			if config.TemplateConfig.JoinChatMessagesByCharacter != nil {
+				joinCharacter = *config.TemplateConfig.JoinChatMessagesByCharacter
+			}
+
+			predInput = strings.Join(mess, joinCharacter)
 			log.Debug().Msgf("Prompt (before templating): %s", predInput)
 
 			templateFile := ""
@@ -470,7 +475,7 @@ func ChatEndpoint(cl *config.BackendConfigLoader, ml *model.ModelLoader, startup
 
 				switch {
 				case noActionsToRun:
-					result, err := handleQuestion(config, input, ml, startupOptions, results, predInput)
+					result, err := handleQuestion(config, input, ml, startupOptions, results, s, predInput)
 					if err != nil {
 						log.Error().Err(err).Msg("error handling question")
 						return
@@ -550,7 +555,14 @@ func ChatEndpoint(cl *config.BackendConfigLoader, ml *model.ModelLoader, startup
 	}
 }
 
-func handleQuestion(config *config.BackendConfig, input *schema.OpenAIRequest, ml *model.ModelLoader, o *config.ApplicationConfig, funcResults []functions.FuncCallResults, prompt string) (string, error) {
+func handleQuestion(config *config.BackendConfig, input *schema.OpenAIRequest, ml *model.ModelLoader, o *config.ApplicationConfig, funcResults []functions.FuncCallResults, result, prompt string) (string, error) {
+
+	if len(funcResults) == 0 && result != "" {
+		log.Debug().Msgf("nothing function results but we had a message from the LLM")
+
+		return result, nil
+	}
+
 	log.Debug().Msgf("nothing to do, computing a reply")
 	arg := ""
 	if len(funcResults) > 0 {
