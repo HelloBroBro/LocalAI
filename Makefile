@@ -5,7 +5,7 @@ BINARY_NAME=local-ai
 
 # llama.cpp versions
 GOLLAMA_STABLE_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=1442677f92e45a475be7b4d056e3633d1d6f813b
+CPPLLAMA_VERSION?=7672adeec7a79ea271058c63106c142ba84f951a
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -327,6 +327,7 @@ ifeq ($(OS),Darwin)
 	$(info ${GREEN}I Skip CUDA build on MacOS${RESET})
 else
 	$(MAKE) backend-assets/grpc/llama-cpp-cuda
+	$(MAKE) backend-assets/grpc/llama-cpp-hipblas
 endif
 	$(MAKE) build
 	mkdir -p release
@@ -711,6 +712,13 @@ backend-assets/grpc/llama-cpp-cuda: backend-assets/grpc
 	$(info ${GREEN}I llama-cpp build info:cuda${RESET})
 	CMAKE_ARGS="$(CMAKE_ARGS) -DLLAMA_AVX=on -DLLAMA_AVX2=off -DLLAMA_AVX512=off -DLLAMA_FMA=off -DLLAMA_F16C=off -DLLAMA_CUDA=ON" $(MAKE) VARIANT="llama-cuda" build-llama-cpp-grpc-server
 	cp -rfv backend/cpp/llama-cuda/grpc-server backend-assets/grpc/llama-cpp-cuda
+
+backend-assets/grpc/llama-cpp-hipblas: backend-assets/grpc
+	cp -rf backend/cpp/llama backend/cpp/llama-hipblas
+	$(MAKE) -C backend/cpp/llama-hipblas purge
+	$(info ${GREEN}I llama-cpp build info:hipblas${RESET})
+	BUILD_TYPE="hipblas" $(MAKE) VARIANT="llama-hipblas" build-llama-cpp-grpc-server
+	cp -rfv backend/cpp/llama-hipblas/grpc-server backend-assets/grpc/llama-cpp-hipblas
 
 backend-assets/grpc/llama-cpp-grpc: backend-assets/grpc
 	cp -rf backend/cpp/llama backend/cpp/llama-grpc
