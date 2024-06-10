@@ -5,7 +5,7 @@ BINARY_NAME=local-ai
 
 # llama.cpp versions
 GOLLAMA_STABLE_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=d4d915d351d1f1270d56184bdd46672893e8a5d8
+CPPLLAMA_VERSION?=e95beeb1fc4621826ddd616776dbdf717366bf5c
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -324,7 +324,7 @@ build-api:
 dist:
 	STATIC=true $(MAKE) backend-assets/grpc/llama-cpp-avx2
 ifeq ($(OS),Darwin)
-	$(info ${GREEN}I Skip CUDA build on MacOS${RESET})
+	$(info ${GREEN}I Skip CUDA/hipblas build on MacOS${RESET})
 else
 	$(MAKE) backend-assets/grpc/llama-cpp-cuda
 	$(MAKE) backend-assets/grpc/llama-cpp-hipblas
@@ -340,6 +340,19 @@ ifeq ($(BUILD_ID),)
 else
 	cp $(BINARY_NAME) release/$(BINARY_NAME)-$(BUILD_ID)-$(OS)-$(ARCH)
 	shasum -a 256 release/$(BINARY_NAME)-$(BUILD_ID)-$(OS)-$(ARCH) > release/$(BINARY_NAME)-$(BUILD_ID)-$(OS)-$(ARCH).sha256
+endif
+
+dist-cross-linux-arm64: 
+	CMAKE_ARGS="$(CMAKE_ARGS) -DLLAMA_NATIVE=off" GRPC_BACKENDS="backend-assets/grpc/llama-cpp-fallback backend-assets/grpc/llama-cpp-grpc backend-assets/util/llama-cpp-rpc-server" \
+	$(MAKE) build
+	mkdir -p release
+# if BUILD_ID is empty, then we don't append it to the binary name
+ifeq ($(BUILD_ID),)
+	cp $(BINARY_NAME) release/$(BINARY_NAME)-$(OS)-arm64
+	shasum -a 256 release/$(BINARY_NAME)-$(OS)-arm64 > release/$(BINARY_NAME)-$(OS)-arm64.sha256
+else
+	cp $(BINARY_NAME) release/$(BINARY_NAME)-$(BUILD_ID)-$(OS)-arm64
+	shasum -a 256 release/$(BINARY_NAME)-$(BUILD_ID)-$(OS)-arm64 > release/$(BINARY_NAME)-$(BUILD_ID)-$(OS)-arm64.sha256
 endif
 
 osx-signed: build
