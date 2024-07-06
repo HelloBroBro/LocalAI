@@ -3,9 +3,11 @@ GOTEST=$(GOCMD) test
 GOVET=$(GOCMD) vet
 BINARY_NAME=local-ai
 
+DETECT_LIBS?=true
+
 # llama.cpp versions
 GOLLAMA_STABLE_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=a38b884c6c4b0c256583acfaaabdf556c62fabea
+CPPLLAMA_VERSION?=213701b51a17175d0d326b566efc03f30ec7fbe6
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -33,6 +35,7 @@ TINYDREAM_VERSION?=c04fa463ace9d9a6464313aa5f9cd0f953b6c057
 export BUILD_TYPE?=
 export STABLE_BUILD_TYPE?=$(BUILD_TYPE)
 export CMAKE_ARGS?=
+export BACKEND_LIBS?=
 
 CGO_LDFLAGS?=
 CGO_LDFLAGS_WHISPER?=
@@ -90,7 +93,7 @@ ifeq ($(OS),Darwin)
 #			-lcblas 	removed: it seems to always be listed as a duplicate flag.
 		CGO_LDFLAGS += -framework Accelerate
 	endif
-else 
+else
 CGO_LDFLAGS_WHISPER+=-lgomp
 endif
 
@@ -178,6 +181,8 @@ ALL_GRPC_BACKENDS+=backend-assets/grpc/rwkv
 ALL_GRPC_BACKENDS+=backend-assets/grpc/whisper
 ALL_GRPC_BACKENDS+=backend-assets/grpc/local-store
 ALL_GRPC_BACKENDS+=$(OPTIONAL_GRPC)
+# Use filter-out to remove the specified backends
+ALL_GRPC_BACKENDS := $(filter-out $(SKIP_GRPC_BACKEND),$(ALL_GRPC_BACKENDS))
 
 GRPC_BACKENDS?=$(ALL_GRPC_BACKENDS) $(OPTIONAL_GRPC)
 TEST_PATHS?=./api/... ./pkg/... ./core/...
@@ -328,7 +333,7 @@ build: prepare backend-assets grpcs ## Build the project
 	$(info ${GREEN}I LD_FLAGS: ${YELLOW}$(LD_FLAGS)${RESET})
 ifneq ($(BACKEND_LIBS),)
 	$(MAKE) backend-assets/lib
-	cp $(BACKEND_LIBS) backend-assets/lib/
+	cp -f $(BACKEND_LIBS) backend-assets/lib/
 endif
 	CGO_LDFLAGS="$(CGO_LDFLAGS)" $(GOCMD) build -ldflags "$(LD_FLAGS)" -tags "$(GO_TAGS)" -o $(BINARY_NAME) ./
 
@@ -343,6 +348,9 @@ backend-assets/lib:
 
 dist:
 	$(MAKE) backend-assets/grpc/llama-cpp-avx2
+ifeq ($(DETECT_LIBS),true)
+	scripts/prepare-libs.sh backend-assets/grpc/llama-cpp-avx2
+endif
 ifeq ($(OS),Darwin)
 	$(info ${GREEN}I Skip CUDA/hipblas build on MacOS${RESET})
 else
@@ -351,7 +359,11 @@ else
 	$(MAKE) backend-assets/grpc/llama-cpp-sycl_f16
 	$(MAKE) backend-assets/grpc/llama-cpp-sycl_f32
 endif
-	STATIC=true $(MAKE) build
+	GO_TAGS="tts p2p" $(MAKE) build
+ifeq ($(DETECT_LIBS),true)
+	scripts/prepare-libs.sh backend-assets/grpc/piper
+endif
+	GO_TAGS="tts p2p" STATIC=true $(MAKE) build
 	mkdir -p release
 # if BUILD_ID is empty, then we don't append it to the binary name
 ifeq ($(BUILD_ID),)
@@ -362,7 +374,7 @@ else
 	shasum -a 256 release/$(BINARY_NAME)-$(BUILD_ID)-$(OS)-$(ARCH) > release/$(BINARY_NAME)-$(BUILD_ID)-$(OS)-$(ARCH).sha256
 endif
 
-dist-cross-linux-arm64: 
+dist-cross-linux-arm64:
 	CMAKE_ARGS="$(CMAKE_ARGS) -DGGML_NATIVE=off" GRPC_BACKENDS="backend-assets/grpc/llama-cpp-fallback backend-assets/grpc/llama-cpp-grpc backend-assets/util/llama-cpp-rpc-server" \
 	STATIC=true $(MAKE) build
 	mkdir -p release
@@ -870,7 +882,7 @@ gen-assets:
 	$(GOCMD) run core/dependencies_manager/manager.go embedded/webui_static.yaml core/http/static/assets
 
 ## Documentation
-docs/layouts/_default: 
+docs/layouts/_default:
 	mkdir -p docs/layouts/_default
 
 docs/static/gallery.html: docs/layouts/_default
