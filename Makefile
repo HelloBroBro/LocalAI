@@ -8,7 +8,7 @@ DETECT_LIBS?=true
 # llama.cpp versions
 GOLLAMA_REPO?=https://github.com/go-skynet/go-llama.cpp
 GOLLAMA_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=01245f5b1629075543bc4478418c7d72a0b4b3c7
+CPPLLAMA_VERSION?=5e2727fe0321c38d1664d26173c654fa1801dc5f
 
 # gpt4all version
 GPT4ALL_REPO?=https://github.com/nomic-ai/gpt4all
@@ -20,7 +20,7 @@ RWKV_VERSION?=661e7ae26d442f5cfebd2a0881b44e8c55949ec6
 
 # whisper.cpp version
 WHISPER_REPO?=https://github.com/ggerganov/whisper.cpp
-WHISPER_CPP_VERSION?=f68298ce06ca3edd6e6f3f21c3d0bb5f073942c3
+WHISPER_CPP_VERSION?=6739eb83c3ca5cf40d24c6fe8442a761a1eb6248
 
 # bert.cpp version
 BERT_REPO?=https://github.com/go-skynet/go-bert.cpp

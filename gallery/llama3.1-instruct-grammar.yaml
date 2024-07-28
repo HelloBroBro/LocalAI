@@ -1,12 +1,14 @@
 ---
-name: "llama3-instruct"
+name: "llama3-instruct-grammar"
 
 config_file: |
   mmap: true
   function:
     disable_no_action: true
     grammar:
-      disable: true
+      no_mixed_free_string: true
+      mixed_mode: true
+      schema_type: llama3.1 # or JSON is supported too (json)
     response_regex:
     - <function=(?P<name>\w+)>(?P<arguments>.*)</function>
   template:

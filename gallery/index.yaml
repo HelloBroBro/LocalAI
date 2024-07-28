@@ -40,6 +40,24 @@
       sha256: 3f16ab17da4521fe3ed7c5d7beed960d3fe7b5b64421ee9650aa53d6b649ccab
       uri: huggingface://MaziyarPanahi/Meta-Llama-3.1-70B-Instruct-GGUF/Meta-Llama-3.1-70B-Instruct.Q4_K_M.gguf
 - !!merge <<: *llama31
+  name: "meta-llama-3.1-8b-instruct:grammar-functioncall"
+  url: "github:mudler/LocalAI/gallery/llama3.1-instruct-grammar.yaml@master"
+  urls:
+    - https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct
+    - https://huggingface.co/MaziyarPanahi/Meta-Llama-3.1-8B-Instruct-GGUF
+  description: |
+    This is the standard Llama 3.1 8B Instruct model with grammar and function call enabled.
+
+    When grammars are enabled in LocalAI, the LLM is forced to output valid tools constrained by BNF grammars. This can be useful for ensuring that the model outputs are valid and can be used in a production environment.
+    For more information on how to use grammars in LocalAI, see https://localai.io/features/openai-functions/#advanced and https://localai.io/features/constrained_grammars/.
+  overrides:
+    parameters:
+      model: Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf
+  files:
+    - filename: Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf
+      sha256: c2f17f44af962660d1ad4cb1af91a731f219f3b326c2b14441f9df1f347f2815
+      uri: huggingface://MaziyarPanahi/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf
+- !!merge <<: *llama31
   name: "meta-llama-3.1-8b-claude-imat"
   urls:
     - https://huggingface.co/Undi95/Meta-Llama-3.1-8B-Claude
@@ -53,6 +71,81 @@
     - filename: Meta-Llama-3.1-8B-Claude-iMat-Q4_K_M.gguf
       sha256: 8de80021b9438f0925a41ae73f77cb73fcfa30090e03a0919ce23d2b9818e9c7
       uri: huggingface://InferenceIllusionist/Meta-Llama-3.1-8B-Claude-iMat-GGUF/Meta-Llama-3.1-8B-Claude-iMat-Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "meta-llama-3.1-8b-instruct-abliterated"
+  icon: https://i.imgur.com/KhorYYG.png
+  urls:
+    - https://huggingface.co/mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated
+    - https://huggingface.co/mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated-GGUF
+  description: |
+    This is an uncensored version of Llama 3.1 8B Instruct created with abliteration.
+  overrides:
+    parameters:
+      model: meta-llama-3.1-8b-instruct-abliterated.Q4_K_M.gguf
+  files:
+    - filename: meta-llama-3.1-8b-instruct-abliterated.Q4_K_M.gguf
+      sha256: 18cca47adfb3954af2b49e3aa2ce1604158337aff45fab2e7654039b65c7683e
+      uri: huggingface://mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated-GGUF/meta-llama-3.1-8b-instruct-abliterated.Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "llama-3.1-70b-japanese-instruct-2407"
+  urls:
+    - https://huggingface.co/cyberagent/Llama-3.1-70B-Japanese-Instruct-2407
+    - https://huggingface.co/mmnga/Llama-3.1-70B-Japanese-Instruct-2407-gguf
+  description: |
+    The Llama-3.1-70B-Japanese-Instruct-2407-gguf model is a Japanese language model that uses the Instruct prompt tuning method. It is based on the LLaMa-3.1-70B model and has been fine-tuned on the imatrix dataset for Japanese. The model is trained to generate informative and coherent responses to given instructions or prompts. It is available in the gguf format and can be used for a variety of tasks such as question answering, text generation, and more.
+  overrides:
+    parameters:
+      model: Llama-3.1-70B-Japanese-Instruct-2407-Q4_K_M.gguf
+  files:
+    - filename: Llama-3.1-70B-Japanese-Instruct-2407-Q4_K_M.gguf
+      sha256: f2a6f0fb5040d3a28479c9f9fc555a5ea7b906dfb9964539f1a68c0676a9c604
+      uri: huggingface://mmnga/Llama-3.1-70B-Japanese-Instruct-2407-gguf/Llama-3.1-70B-Japanese-Instruct-2407-Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "openbuddy-llama3.1-8b-v22.1-131k"
+  icon: https://raw.githubusercontent.com/OpenBuddy/OpenBuddy/main/media/demo.png
+  urls:
+    - https://huggingface.co/sunnyyy/openbuddy-llama3.1-8b-v22.1-131k-Q4_K_M-GGUF
+  description: |
+    OpenBuddy - Open Multilingual Chatbot
+  overrides:
+    parameters:
+      model: openbuddy-llama3.1-8b-v22.1-131k-q4_k_m.gguf
+  files:
+    - filename: openbuddy-llama3.1-8b-v22.1-131k-q4_k_m.gguf
+      sha256: c87a273785759f2d044046b7a7b42f05706baed7dc0650ed883a3bee2a097d86
+      uri: huggingface://sunnyyy/openbuddy-llama3.1-8b-v22.1-131k-Q4_K_M-GGUF/openbuddy-llama3.1-8b-v22.1-131k-q4_k_m.gguf
+- !!merge <<: *llama31
+  name: "llama3.1-8b-fireplace2"
+  icon: https://cdn-uploads.huggingface.co/production/uploads/64f267a8a4f79a118e0fcc89/JYkaXrk2DqpXhaL9WymKY.jpeg
+  urls:
+    - https://huggingface.co/ValiantLabs/Llama3.1-8B-Fireplace2
+    - https://huggingface.co/mudler/Llama3.1-8B-Fireplace2-Q4_K_M-GGUF
+  description: |
+    Fireplace 2 is a chat model, adding helpful structured outputs to Llama 3.1 8b Instruct.
+
+        an expansion pack of supplementary outputs - request them at will within your chat:
+            Inline function calls
+            SQL queries
+            JSON objects
+            Data visualization with matplotlib
+        Mix normal chat and structured outputs within the same conversation.
+        Fireplace 2 supplements the existing strengths of Llama 3.1, providing inline capabilities within the Llama 3 Instruct format.
+
+    Version
+
+    This is the 2024-07-23 release of Fireplace 2 for Llama 3.1 8b.
+
+    We're excited to bring further upgrades and releases to Fireplace 2 in the future.
+
+    Help us and recommend Fireplace 2 to your friends!
+  overrides:
+    parameters:
+      model: llama3.1-8b-fireplace2-q4_k_m.gguf
+  files:
+    - filename: llama3.1-8b-fireplace2-q4_k_m.gguf
+      sha256: 54527fd2474b576086ea31e759214ab240abe2429ae623a02d7ba825cc8cb13e
+      uri: huggingface://mudler/Llama3.1-8B-Fireplace2-Q4_K_M-GGUF/llama3.1-8b-fireplace2-q4_k_m.gguf
+## Uncensored models
 - !!merge <<: *llama31
   name: "darkidol-llama-3.1-8b-instruct-1.0-uncensored-i1"
   icon: https://huggingface.co/aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.0-Uncensored/resolve/main/DarkIdol-Llama-3.1-8B-Instruct-1.0-Uncensored.png
@@ -82,6 +175,68 @@
     - filename: DarkIdol-Llama-3.1-8B-Instruct-1.0-Uncensored.i1-Q4_K_M.gguf
       sha256: 6730efc0628c7534189487b52ed5a358a0a2c3ecb062824eccc8e0444eaa212f
       uri: huggingface://mradermacher/DarkIdol-Llama-3.1-8B-Instruct-1.0-Uncensored-i1-GGUF/DarkIdol-Llama-3.1-8B-Instruct-1.0-Uncensored.i1-Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "darkidol-llama-3.1-8b-instruct-1.1-uncensored-iq-imatrix-request"
+  icon: https://cdn-uploads.huggingface.co/production/uploads/65d4cf2693a0a3744a27536c/iDV5GTVJbjkvMp1set-ZC.png
+  urls:
+    - https://huggingface.co/LWDCLS/DarkIdol-Llama-3.1-8B-Instruct-1.1-Uncensored-GGUF-IQ-Imatrix-Request
+  description: |
+    Uncensored
+    virtual idol Twitter
+
+        https://x.com/aifeifei799
+
+    Questions
+
+        The model's response results are for reference only, please do not fully trust them.
+        This model is solely for learning and testing purposes, and errors in output are inevitable. We do not take responsibility for the output results. If the output content is to be used, it must be modified; if not modified, we will assume it has been altered.
+        For commercial licensing, please refer to the Llama 3.1 agreement.
+  overrides:
+    parameters:
+      model: DarkIdol-Llama-3.1-8B-Instruct-1.1-Uncensored-Q4_K_M-imat.gguf
+  files:
+    - filename: DarkIdol-Llama-3.1-8B-Instruct-1.1-Uncensored-Q4_K_M-imat.gguf
+      sha256: fa9fc56de7d902b755c43f1a5d0867d961675174a1b3e73a10d822836c3390e6
+      uri: huggingface://LWDCLS/DarkIdol-Llama-3.1-8B-Instruct-1.1-Uncensored-GGUF-IQ-Imatrix-Request/DarkIdol-Llama-3.1-8B-Instruct-1.1-Uncensored-Q4_K_M-imat.gguf
+- !!merge <<: *llama31
+  name: "llama-3.1-8b-instruct-fei-v1-uncensored"
+  icon: https://huggingface.co/aifeifei799/Llama-3.1-8B-Instruct-Fei-v1-Uncensored/resolve/main/Llama-3.1-8B-Instruct-Fei-v1-Uncensored.png
+  urls:
+    - https://huggingface.co/aifeifei799/Llama-3.1-8B-Instruct-Fei-v1-Uncensored
+    - https://huggingface.co/mradermacher/Llama-3.1-8B-Instruct-Fei-v1-Uncensored-GGUF
+  description: |
+      Llama-3.1-8B-Instruct Uncensored
+      more informtion look at Llama-3.1-8B-Instruct
+  overrides:
+    parameters:
+      model: Llama-3.1-8B-Instruct-Fei-v1-Uncensored.Q4_K_M.gguf
+  files:
+    - filename: Llama-3.1-8B-Instruct-Fei-v1-Uncensored.Q4_K_M.gguf
+      sha256: 12fef8ff0a5c4cf6988523d33d89287edb7531f0d1644707548f45f1387e398a
+      uri: huggingface://mradermacher/Llama-3.1-8B-Instruct-Fei-v1-Uncensored-GGUF/Llama-3.1-8B-Instruct-Fei-v1-Uncensored.Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "lumimaid-v0.2-8b"
+  urls:
+    - https://huggingface.co/NeverSleep/Lumimaid-v0.2-8B
+    - https://huggingface.co/mradermacher/Lumimaid-v0.2-8B-GGUF
+  icon: https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/TUcHg7LKNjfo0sni88Ps7.png
+  description: |
+      This model is based on: Meta-Llama-3.1-8B-Instruct
+
+      Wandb: https://wandb.ai/undis95/Lumi-Llama-3-1-8B?nw=nwuserundis95
+
+      Lumimaid 0.1 -> 0.2 is a HUGE step up dataset wise.
+
+      As some people have told us our models are sloppy, Ikari decided to say fuck it and literally nuke all chats out with most slop.
+
+      Our dataset stayed the same since day one, we added data over time, cleaned them, and repeat. After not releasing model for a while because we were never satisfied, we think it's time to come back!
+  overrides:
+    parameters:
+      model: Lumimaid-v0.2-8B.Q4_K_M.gguf
+  files:
+    - filename: Lumimaid-v0.2-8B.Q4_K_M.gguf
+      sha256: c8024fcb49c71410903d0d076a1048249fa48b31637bac5177bf5c3f3d603d85
+      uri: huggingface://mradermacher/Lumimaid-v0.2-8B-GGUF/Lumimaid-v0.2-8B.Q4_K_M.gguf
 - &deepseek
   ## Deepseek
   url: "github:mudler/LocalAI/gallery/deepseek.yaml@master"
@@ -442,6 +597,46 @@
     - filename: Einstein-v4-7B.Q4_K_M.gguf
       sha256: 78bd573de2a9eb3c6e213132858164e821145f374fcaa4b19dfd6502c05d990d
       uri: huggingface://mradermacher/Einstein-v4-7B-GGUF/Einstein-v4-7B.Q4_K_M.gguf
+- !!merge <<: *mistral03
+  name: "mistral-nemo-instruct-2407"
+  urls:
+    - https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407
+    - https://huggingface.co/bartowski/Mistral-Nemo-Instruct-2407-GGUF
+    - https://mistral.ai/news/mistral-nemo/
+  description: |
+    The Mistral-Nemo-Instruct-2407 Large Language Model (LLM) is an instruct fine-tuned version of the Mistral-Nemo-Base-2407. Trained jointly by Mistral AI and NVIDIA, it significantly outperforms existing models smaller or similar in size.
+  overrides:
+    parameters:
+      model: Mistral-Nemo-Instruct-2407-Q4_K_M.gguf
+  files:
+    - filename: Mistral-Nemo-Instruct-2407-Q4_K_M.gguf
+      sha256: 1a8b92fb546a80dce78151e4908f7bdb2c11fb3ef52af960e4bbe319a9cc5052
+      uri: huggingface://bartowski/Mistral-Nemo-Instruct-2407-GGUF/Mistral-Nemo-Instruct-2407-Q4_K_M.gguf
+- !!merge <<: *mistral03
+  name: "lumimaid-v0.2-12b"
+  icon: https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/ep3ojmuMkFS-GmgRuI9iB.png
+  urls:
+    - https://huggingface.co/NeverSleep/Lumimaid-v0.2-12B
+    - https://huggingface.co/mudler/Lumimaid-v0.2-12B-Q4_K_M-GGUF
+  description: |
+    This model is based on: Mistral-Nemo-Instruct-2407
+
+    Wandb: https://wandb.ai/undis95/Lumi-Mistral-Nemo?nw=nwuserundis95
+
+    NOTE: As explained on Mistral-Nemo-Instruct-2407 repo, it's recommended to use a low temperature, please experiment!
+
+    Lumimaid 0.1 -> 0.2 is a HUGE step up dataset wise.
+
+    As some people have told us our models are sloppy, Ikari decided to say fuck it and literally nuke all chats out with most slop.
+
+    Our dataset stayed the same since day one, we added data over time, cleaned them, and repeat. After not releasing model for a while because we were never satisfied, we think it's time to come back!
+  overrides:
+    parameters:
+      model: lumimaid-v0.2-12b-q4_k_m.gguf
+  files:
+    - filename: lumimaid-v0.2-12b-q4_k_m.gguf
+      sha256: f72299858a07e52be920b86d42ddcfcd5008b961d601ef6fd6a98a3377adccbf
+      uri: huggingface://mudler/Lumimaid-v0.2-12B-Q4_K_M-GGUF/lumimaid-v0.2-12b-q4_k_m.gguf
 - &mudler
   ### START mudler's LocalAI specific-models
   url: "github:mudler/LocalAI/gallery/mudler.yaml@master"
