@@ -238,6 +238,19 @@
     - filename: Llama3.1-70B-Chinese-Chat.Q4_K_M.gguf
       sha256: 395cff3cce2b092f840b68eb6e31f4c8b670bc8e3854bbb230df8334369e671d
       uri: huggingface://mradermacher/Llama3.1-70B-Chinese-Chat-GGUF/Llama3.1-70B-Chinese-Chat.Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "meta-llama-3.1-instruct-9.99b-brainstorm-10x-form-3"
+  urls:
+    - https://huggingface.co/DavidAU/Meta-Llama-3.1-Instruct-9.99B-BRAINSTORM-10x-FORM-3-GGUF
+  description: |
+    The Meta-Llama-3.1-8B Instruct model is a large language model trained on a diverse range of text data, with the goal of generating high-quality and coherent text in response to user input. This model is enhanced through a process called "Brainstorm", which involves expanding and recalibrating the model's reasoning center to improve its creative and generative capabilities. The resulting model is capable of generating detailed, vivid, and nuanced text, with a focus on prose quality, conceptually complex responses, and a deeper understanding of the user's intent. The Brainstorm process is designed to enhance the model's performance in creative writing, roleplaying, and story generation, and to improve its ability to generate coherent and engaging text in a wide range of contexts. The model is based on the Llama3 architecture and has been fine-tuned using the Instruct framework, which provides it with a strong foundation for understanding natural language instructions and generating appropriate responses. The model can be used for a variety of tasks, including creative writing,Generating coherent and detailed text, exploring different perspectives and scenarios, and brainstorming ideas.
+  overrides:
+    parameters:
+      model: Meta-Llama-3.1-8B-Instruct-Instruct-exp10-3-Q4_K_M.gguf
+  files:
+    - filename: Meta-Llama-3.1-8B-Instruct-Instruct-exp10-3-Q4_K_M.gguf
+      sha256: f52ff984100b1ff6acfbd7ed1df770064118274a54ae5d48749400a662113615
+      uri: huggingface://DavidAU/Meta-Llama-3.1-Instruct-9.99B-BRAINSTORM-10x-FORM-3-GGUF/Meta-Llama-3.1-8B-Instruct-Instruct-exp10-3-Q4_K_M.gguf
 ## Uncensored models
 - !!merge <<: *llama31
   name: "darkidol-llama-3.1-8b-instruct-1.0-uncensored-i1"
@@ -803,6 +816,26 @@
     - filename: lumimaid-v0.2-12b-q4_k_m.gguf
       sha256: f72299858a07e52be920b86d42ddcfcd5008b961d601ef6fd6a98a3377adccbf
       uri: huggingface://mudler/Lumimaid-v0.2-12B-Q4_K_M-GGUF/lumimaid-v0.2-12b-q4_k_m.gguf
+- !!merge <<: *mistral03
+  url: "github:mudler/LocalAI/gallery/chatml.yaml@master"
+  name: "mn-12b-celeste-v1.9"
+  icon: https://cdn-uploads.huggingface.co/production/uploads/630cf5d14ca0a22768bbe10c/QcU3xEgVu18jeFtMFxIw-.webp
+  urls:
+    - https://huggingface.co/nothingiisreal/MN-12B-Celeste-V1.9
+    - https://huggingface.co/mradermacher/MN-12B-Celeste-V1.9-GGUF
+  description: |
+      Mistral Nemo 12B Celeste V1.9
+
+      This is a story writing and roleplaying model trained on Mistral NeMo 12B Instruct at 8K context using Reddit Writing Prompts, Kalo's Opus 25K Instruct and c2 logs cleaned
+
+      This version has improved NSFW, smarter and more active narration. It's also trained with ChatML tokens so there should be no EOS bleeding whatsoever.
+  overrides:
+    parameters:
+      model: MN-12B-Celeste-V1.9.Q4_K_M.gguf
+  files:
+    - filename: MN-12B-Celeste-V1.9.Q4_K_M.gguf
+      sha256: 019daeaa63d82d55d1ea623b9c255deea6793af4044bb4994d2b4d09e8959f7b
+      uri: huggingface://mradermacher/MN-12B-Celeste-V1.9-GGUF/MN-12B-Celeste-V1.9.Q4_K_M.gguf
 - &mudler
   ### START mudler's LocalAI specific-models
   url: "github:mudler/LocalAI/gallery/mudler.yaml@master"
@@ -1298,6 +1331,20 @@
     - filename: tarnished-9b.i1-Q4_K_M.gguf
       sha256: 62ab09124b3f6698bd94ef966533ae5d427d87f6bdc09f6f46917def96420a0c
       uri: huggingface://mradermacher/tarnished-9b-i1-GGUF/tarnished-9b.i1-Q4_K_M.gguf
+- !!merge <<: *gemma
+  name: "shieldgemma-9b-i1"
+  urls:
+    - https://huggingface.co/google/shieldgemma-9b
+    - https://huggingface.co/mradermacher/shieldgemma-9b-i1-GGUF
+  description: |
+    ShieldGemma is a series of safety content moderation models built upon Gemma 2 that target four harm categories (sexually explicit, dangerous content, hate, and harassment). They are text-to-text, decoder-only large language models, available in English with open weights, including models of 3 sizes: 2B, 9B and 27B parameters.
+  overrides:
+    parameters:
+      model: shieldgemma-9b.i1-Q4_K_M.gguf
+  files:
+    - filename: shieldgemma-9b.i1-Q4_K_M.gguf
+      sha256: ffa7eaadcc0c7d0544fda5b0d86bba3ffa3431b673e5b2135f421cfe65bd8732
+      uri: huggingface://mradermacher/shieldgemma-9b-i1-GGUF/shieldgemma-9b.i1-Q4_K_M.gguf
 - &llama3
   url: "github:mudler/LocalAI/gallery/llama3-instruct.yaml@master"
   icon: https://cdn-uploads.huggingface.co/production/uploads/642cc1c253e76b4c2286c58e/aJJxKus1wP5N-euvHEUq7.png
