@@ -6,23 +6,18 @@ import (
 	"github.com/mudler/LocalAI/core/config"
 	fiberContext "github.com/mudler/LocalAI/core/http/ctx"
 	"github.com/mudler/LocalAI/core/schema"
-	"github.com/rs/zerolog/log"
-
 	"github.com/mudler/LocalAI/pkg/model"
+	"github.com/rs/zerolog/log"
 )
 
-// TokenMetricsEndpoint is an endpoint to get TokensProcessed Per Second for Active SlotID
-//
-//	@Summary	Get TokenMetrics for Active Slot.
-//	@Accept json
-//	@Produce audio/x-wav
-//	@Success	200		{string}	binary				"generated audio/wav file"
-//	@Router		/v1/tokenMetrics [get]
-//	@Router		/tokenMetrics [get]
-func TokenMetricsEndpoint(cl *config.BackendConfigLoader, ml *model.ModelLoader, appConfig *config.ApplicationConfig) func(c *fiber.Ctx) error {
+// TokenizeEndpoint exposes a REST API to tokenize the content
+// @Summary Tokenize the input.
+// @Success 200 {object} schema.TokenizeResponse "Response"
+// @Router /v1/tokenize [post]
+func TokenizeEndpoint(cl *config.BackendConfigLoader, ml *model.ModelLoader, appConfig *config.ApplicationConfig) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 
-		input := new(schema.TokenMetricsRequest)
+		input := new(schema.TokenizeRequest)
 
 		// Get input data from the request body
 		if err := c.BodyParser(input); err != nil {
@@ -49,12 +44,15 @@ func TokenMetricsEndpoint(cl *config.BackendConfigLoader, ml *model.ModelLoader,
 		} else {
 			modelFile = cfg.Model
 		}
-		log.Debug().Msgf("Token Metrics for model: %s", modelFile)
+		log.Debug().Msgf("Request for model: %s", modelFile)
 
-		response, err := backend.TokenMetrics(modelFile, ml, appConfig, *cfg)
+		tokenResponse, err := backend.ModelTokenize(input.Content, ml, *cfg, appConfig)
 		if err != nil {
 			return err
 		}
-		return c.JSON(response)
+
+		c.JSON(tokenResponse)
+		return nil
+
 	}
 }

@@ -114,9 +114,9 @@ func (ml *ModelLoader) ListModels() []Model {
 	return models
 }
 
-func (ml *ModelLoader) LoadModel(modelName string, loader func(string, string) (*Model, error)) (*Model, error) {
+func (ml *ModelLoader) LoadModel(modelID, modelName string, loader func(string, string, string) (*Model, error)) (*Model, error) {
 	// Check if we already have a loaded model
-	if model := ml.CheckIsLoaded(modelName); model != nil {
+	if model := ml.CheckIsLoaded(modelID); model != nil {
 		return model, nil
 	}
 
@@ -126,16 +126,16 @@ func (ml *ModelLoader) LoadModel(modelName string, loader func(string, string) (
 
 	ml.mu.Lock()
 	defer ml.mu.Unlock()
-	model, err := loader(modelName, modelFile)
+	model, err := loader(modelID, modelName, modelFile)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to load model with internal loader: %s", err)
 	}
 
 	if model == nil {
 		return nil, fmt.Errorf("loader didn't return a model")
 	}
 
-	ml.models[modelName] = model
+	ml.models[modelID] = model
 
 	return model, nil
 }
