@@ -472,6 +472,78 @@
     - filename: qwen2.5-7b-ins-v3-Q4_K_M.gguf
       sha256: 9c23734072714a4886c0386ae0ff07a5e940d67ad52278e2ed689fec44e1e0c8
       uri: huggingface://bartowski/qwen2.5-7b-ins-v3-GGUF/qwen2.5-7b-ins-v3-Q4_K_M.gguf
+- !!merge <<: *qwen25
+  name: "supernova-medius"
+  urls:
+    - https://huggingface.co/arcee-ai/SuperNova-Medius-GGUF
+  description: |
+    Arcee-SuperNova-Medius is a 14B parameter language model developed by Arcee.ai, built on the Qwen2.5-14B-Instruct architecture. This unique model is the result of a cross-architecture distillation pipeline, combining knowledge from both the Qwen2.5-72B-Instruct model and the Llama-3.1-405B-Instruct model. By leveraging the strengths of these two distinct architectures, SuperNova-Medius achieves high-quality instruction-following and complex reasoning capabilities in a mid-sized, resource-efficient form.
+
+    SuperNova-Medius is designed to excel in a variety of business use cases, including customer support, content creation, and technical assistance, while maintaining compatibility with smaller hardware configurations. It’s an ideal solution for organizations looking for advanced capabilities without the high resource requirements of larger models like our SuperNova-70B.
+  overrides:
+    parameters:
+      model: SuperNova-Medius-Q4_K_M.gguf
+  files:
+    - filename: SuperNova-Medius-Q4_K_M.gguf
+      sha256: aaa4bf3451bc900f186fd4b6b3a6a26bfd40c85908f605db76b92e58aadcc864
+      uri: huggingface://arcee-ai/SuperNova-Medius-GGUF/SuperNova-Medius-Q4_K_M.gguf
+- !!merge <<: *qwen25
+  name: "eva-qwen2.5-14b-v0.1-i1"
+  urls:
+    - https://huggingface.co/EVA-UNIT-01/EVA-Qwen2.5-14B-v0.1
+    - https://huggingface.co/mradermacher/EVA-Qwen2.5-14B-v0.1-i1-GGUF
+  description: |
+    A RP/storywriting specialist model, full-parameter finetune of Qwen2.5-14B on mixture of synthetic and natural data.
+    It uses Celeste 70B 0.1 data mixture, greatly expanding it to improve versatility, creativity and "flavor" of the resulting model.
+  overrides:
+    parameters:
+      model: EVA-Qwen2.5-14B-v0.1.i1-Q4_K_M.gguf
+  files:
+    - filename: EVA-Qwen2.5-14B-v0.1.i1-Q4_K_M.gguf
+      sha256: 4e9665d4f83cd97efb42c8427f9c09be93b72e23a0364c91ad0b5de8056f2795
+      uri: huggingface://mradermacher/EVA-Qwen2.5-14B-v0.1-i1-GGUF/EVA-Qwen2.5-14B-v0.1.i1-Q4_K_M.gguf
+- !!merge <<: *qwen25
+  name: "cursorcore-qw2.5-7b-i1"
+  urls:
+    - https://huggingface.co/TechxGenus/CursorCore-QW2.5-7B
+    - https://huggingface.co/mradermacher/CursorCore-QW2.5-7B-i1-GGUF
+  description: |
+    CursorCore is a series of open-source models designed for AI-assisted programming. It aims to support features such as automated editing and inline chat, replicating the core abilities of closed-source AI-assisted programming tools like Cursor. This is achieved by aligning data generated through Programming-Instruct. Please read our paper to learn more.
+  overrides:
+    parameters:
+      model: CursorCore-QW2.5-7B.i1-Q4_K_M.gguf
+  files:
+    - filename: CursorCore-QW2.5-7B.i1-Q4_K_M.gguf
+      sha256: 81868f4edb4ec1a61debde1dbdebc02b407930ee19a6d946ff801afba840a102
+      uri: huggingface://mradermacher/CursorCore-QW2.5-7B-i1-GGUF/CursorCore-QW2.5-7B.i1-Q4_K_M.gguf
+- !!merge <<: *qwen25
+  name: "cursorcore-qw2.5-1.5b-lc-i1"
+  urls:
+    - https://huggingface.co/TechxGenus/CursorCore-QW2.5-1.5B-LC
+    - https://huggingface.co/mradermacher/CursorCore-QW2.5-1.5B-LC-i1-GGUF
+  description: |
+    CursorCore is a series of open-source models designed for AI-assisted programming. It aims to support features such as automated editing and inline chat, replicating the core abilities of closed-source AI-assisted programming tools like Cursor. This is achieved by aligning data generated through Programming-Instruct. Please read our paper to learn more.
+  overrides:
+    parameters:
+      model: CursorCore-QW2.5-1.5B-LC.i1-Q4_K_M.gguf
+  files:
+    - filename: CursorCore-QW2.5-1.5B-LC.i1-Q4_K_M.gguf
+      sha256: 185d720c810f7345ef861ad8eef1199bb15afa8e4f3c03bd5ffd476cfa465127
+      uri: huggingface://mradermacher/CursorCore-QW2.5-1.5B-LC-i1-GGUF/CursorCore-QW2.5-1.5B-LC.i1-Q4_K_M.gguf
+- !!merge <<: *qwen25
+  name: "edgerunner-command-nested-i1"
+  urls:
+    - https://huggingface.co/edgerunner-ai/EdgeRunner-Command-Nested
+    - https://huggingface.co/mradermacher/EdgeRunner-Command-Nested-i1-GGUF
+  description: |
+    EdgeRunner-Command-Nested is an advanced large language model designed specifically for handling complex nested function calls. Initialized from Qwen2.5-7B-Instruct, further enhanced by the integration of the Hermes function call template and additional training on a specialized dataset (based on TinyAgent). This extra dataset focuses on personal domain applications, providing the model with a robust understanding of nested function scenarios that are typical in complex user interactions.
+  overrides:
+    parameters:
+      model: EdgeRunner-Command-Nested.i1-Q4_K_M.gguf
+  files:
+    - filename: EdgeRunner-Command-Nested.i1-Q4_K_M.gguf
+      sha256: a1cc4d2b601dc20e58cbb549bd3e9bc460995840c0aaf1cd3c1cb5414c900ac7
+      uri: huggingface://mradermacher/EdgeRunner-Command-Nested-i1-GGUF/EdgeRunner-Command-Nested.i1-Q4_K_M.gguf
 - &archfunct
   license: apache-2.0
   tags:
@@ -1412,6 +1484,91 @@
     - filename: NIHAPPY-L3.1-8B-v0.09.Q4_K_M.gguf
       sha256: 9bd46a06093448b143bd2775f0fb1b1b172c851fafdce31289e13b7dfc23a0d7
       uri: huggingface://QuantFactory/NIHAPPY-L3.1-8B-v0.09-GGUF/NIHAPPY-L3.1-8B-v0.09.Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "llama3.1-flammades-70b"
+  icon: https://huggingface.co/flammenai/Flammades-Mistral-7B/resolve/main/flammades.png?download=true
+  urls:
+    - https://huggingface.co/flammenai/Llama3.1-Flammades-70B
+    - https://huggingface.co/mradermacher/Llama3.1-Flammades-70B-GGUF
+  description: |
+    nbeerbower/Llama3.1-Gutenberg-Doppel-70B finetuned on flammenai/Date-DPO-NoAsterisks and jondurbin/truthy-dpo-v0.1.
+  overrides:
+    parameters:
+      model: Llama3.1-Flammades-70B.Q4_K_M.gguf
+  files:
+    - filename: Llama3.1-Flammades-70B.Q4_K_M.gguf
+      sha256: f602ed006d0059ac87c6ce5904a7cc6f4b4f290886a1049f96b5b2c561ab5a89
+      uri: huggingface://mradermacher/Llama3.1-Flammades-70B-GGUF/Llama3.1-Flammades-70B.Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "llama3.1-gutenberg-doppel-70b"
+  # chatml
+  url: "github:mudler/LocalAI/gallery/chatml.yaml@master"
+  icon: https://huggingface.co/nbeerbower/Mistral-Small-Gutenberg-Doppel-22B/resolve/main/doppel-header?download=true
+  urls:
+    - https://huggingface.co/nbeerbower/Llama3.1-Gutenberg-Doppel-70B
+    - https://huggingface.co/mradermacher/Llama3.1-Gutenberg-Doppel-70B-GGUF
+  description: |
+    mlabonne/Hermes-3-Llama-3.1-70B-lorablated finetuned on jondurbin/gutenberg-dpo-v0.1 and nbeerbower/gutenberg2-dpo.
+  overrides:
+    parameters:
+      model: Llama3.1-Gutenberg-Doppel-70B.Q4_K_M.gguf
+  files:
+    - filename: Llama3.1-Gutenberg-Doppel-70B.Q4_K_M.gguf
+      sha256: af558f954fa26c5bb75352178cb815bbf268f01c0ca0b96f2149422d4c19511b
+      uri: huggingface://mradermacher/Llama3.1-Gutenberg-Doppel-70B-GGUF/Llama3.1-Gutenberg-Doppel-70B.Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "llama-3.1-8b-arliai-formax-v1.0-iq-arm-imatrix"
+  url: "github:mudler/LocalAI/gallery/chatml.yaml@master"
+  icon: https://iili.io/2HmlLn2.md.png
+  urls:
+    - https://huggingface.co/Lewdiculous/Llama-3.1-8B-ArliAI-Formax-v1.0-GGUF-IQ-ARM-Imatrix
+  description: |
+    Quants for ArliAI/Llama-3.1-8B-ArliAI-Formax-v1.0.
+
+    "Formax is a model that specializes in following response format instructions. Tell it the format of it's response and it will follow it perfectly. Great for data processing and dataset creation tasks."
+
+    "It is also a highly uncensored model that will follow your instructions very well."
+  overrides:
+    parameters:
+      model: Llama-3.1-8B-ArliAI-Formax-v1.0-Q4_K_M-imat.gguf
+  files:
+    - filename: Llama-3.1-8B-ArliAI-Formax-v1.0-Q4_K_M-imat.gguf
+      sha256: b548ad47caf7008a697afb3556190359529f5a05ec0e4e48ef992c7869e14255
+      uri: huggingface://Lewdiculous/Llama-3.1-8B-ArliAI-Formax-v1.0-GGUF-IQ-ARM-Imatrix/Llama-3.1-8B-ArliAI-Formax-v1.0-Q4_K_M-imat.gguf
+- !!merge <<: *llama31
+  name: "hermes-3-llama-3.1-70b-lorablated"
+  icon: https://cdn-uploads.huggingface.co/production/uploads/61b8e2ba285851687028d395/4Hbw5n68jKUSBQeTqQIeT.png
+  urls:
+    - https://huggingface.co/mlabonne/Hermes-3-Llama-3.1-70B-lorablated
+    - https://huggingface.co/mradermacher/Hermes-3-Llama-3.1-70B-lorablated-GGUF
+  description: |
+    This is an uncensored version of NousResearch/Hermes-3-Llama-3.1-70B using lorablation.
+    The recipe is based on @grimjim's grimjim/Llama-3.1-8B-Instruct-abliterated_via_adapter (special thanks):
+    Extraction: We extract a LoRA adapter by comparing two models: a censored Llama 3 (meta-llama/Meta-Llama-3-70B-Instruct) and an abliterated Llama 3.1 (failspy/Meta-Llama-3.1-70B-Instruct-abliterated).
+    Merge: We merge this new LoRA adapter using task arithmetic to the censored NousResearch/Hermes-3-Llama-3.1-70B to abliterate it.
+  overrides:
+    parameters:
+      model: Hermes-3-Llama-3.1-70B-lorablated.Q4_K_M.gguf
+  files:
+    - filename: Hermes-3-Llama-3.1-70B-lorablated.Q4_K_M.gguf
+      sha256: 9294875ae3b8822855072b0f710ce800536d144cf303a91bcb087c4a307b578d
+      uri: huggingface://mradermacher/Hermes-3-Llama-3.1-70B-lorablated-GGUF/Hermes-3-Llama-3.1-70B-lorablated.Q4_K_M.gguf
+- !!merge <<: *llama31
+  name: "hermes-3-llama-3.1-8b-lorablated"
+  urls:
+    - https://huggingface.co/mlabonne/Hermes-3-Llama-3.1-8B-lorablated-GGUF
+  description: |
+    This is an uncensored version of NousResearch/Hermes-3-Llama-3.1-8B using lorablation.
+    The recipe is simple:
+        Extraction: We extract a LoRA adapter by comparing two models: a censored Llama 3.1 (meta-llama/Meta-Llama-3-8B-Instruct) and an abliterated Llama 3.1 (mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated).
+        Merge: We merge this new LoRA adapter using task arithmetic to the censored NousResearch/Hermes-3-Llama-3.1-8B to abliterate it.
+  overrides:
+    parameters:
+      model: hermes-3-llama-3.1-8b-lorablated.Q4_K_M.gguf
+  files:
+    - filename: hermes-3-llama-3.1-8b-lorablated.Q4_K_M.gguf
+      sha256: 8cff9d399a0583616fe1f290da6daa091ab5c5493d0e173a8fffb45202d79417
+      uri: huggingface://mlabonne/Hermes-3-Llama-3.1-8B-lorablated-GGUF/hermes-3-llama-3.1-8b-lorablated.Q4_K_M.gguf
 - &deepseek
   ## Deepseek
   url: "github:mudler/LocalAI/gallery/deepseek.yaml@master"
@@ -1437,6 +1594,20 @@
     - filename: DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M.gguf
       sha256: 50ec78036433265965ed1afd0667c00c71c12aa70bcf383be462cb8e159db6c0
       uri: huggingface://LoneStriker/DeepSeek-Coder-V2-Lite-Instruct-GGUF/DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M.gguf
+- !!merge <<: *deepseek
+  name: "cursorcore-ds-6.7b-i1"
+  urls:
+    - https://huggingface.co/TechxGenus/CursorCore-DS-6.7B
+    - https://huggingface.co/mradermacher/CursorCore-DS-6.7B-i1-GGUF
+  description: |
+    CursorCore is a series of open-source models designed for AI-assisted programming. It aims to support features such as automated editing and inline chat, replicating the core abilities of closed-source AI-assisted programming tools like Cursor. This is achieved by aligning data generated through Programming-Instruct. Please read our paper to learn more.
+  overrides:
+    parameters:
+      model: CursorCore-DS-6.7B.i1-Q4_K_M.gguf
+  files:
+    - filename: CursorCore-DS-6.7B.i1-Q4_K_M.gguf
+      sha256: 71b94496be79e5bc45c23d6aa6c242f5f1d3625b4f00fe91d781d381ef35c538
+      uri: huggingface://mradermacher/CursorCore-DS-6.7B-i1-GGUF/CursorCore-DS-6.7B.i1-Q4_K_M.gguf
 - name: "archangel_sft_pythia2-8b"
   url: "github:mudler/LocalAI/gallery/tuluv2.yaml@master"
   icon: https://gist.github.com/assets/29318529/fe2d8391-dbd1-4b7e-9dc4-7cb97e55bc06
@@ -4248,6 +4419,19 @@
     - filename: Yi-Coder-9B.Q4_K_M.gguf
       sha256: cff3db8a69c43654e3c2d2984e86ad2791d1d446ec56b24a636ba1ce78363308
       uri: huggingface://QuantFactory/Yi-Coder-9B-GGUF/Yi-Coder-9B.Q4_K_M.gguf
+- !!merge <<: *yi-chat
+  name: "cursorcore-yi-9b"
+  urls:
+    - https://huggingface.co/mradermacher/CursorCore-Yi-9B-GGUF
+  description: |
+    CursorCore is a series of open-source models designed for AI-assisted programming. It aims to support features such as automated editing and inline chat, replicating the core abilities of closed-source AI-assisted programming tools like Cursor. This is achieved by aligning data generated through Programming-Instruct. Please read our paper to learn more.
+  overrides:
+    parameters:
+      model: CursorCore-Yi-9B.Q4_K_M.gguf
+  files:
+    - filename: CursorCore-Yi-9B.Q4_K_M.gguf
+      sha256: 943bf59b34bee34afae8390c1791ccbc7c742e11a4d04d538a699754eb92215e
+      uri: huggingface://mradermacher/CursorCore-Yi-9B-GGUF/CursorCore-Yi-9B.Q4_K_M.gguf
 - &vicuna-chat
   ## LLama2 and derivatives
   ### Start Fimbulvetr
