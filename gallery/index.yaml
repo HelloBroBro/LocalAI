@@ -1,4 +1,70 @@
 ---
+- &opencoder
+  name: "opencoder-8b-base"
+  icon: https://github.com/OpenCoder-llm/opencoder-llm.github.io/blob/main/static/images/opencoder_icon.jpg?raw=true
+  url: "github:mudler/LocalAI/gallery/codellama.yaml@master"
+  urls:
+    - https://huggingface.co/infly/OpenCoder-8B-Base
+    - https://huggingface.co/QuantFactory/OpenCoder-8B-Base-GGUF
+  tags:
+    - llm
+    - gguf
+    - gpu
+    - cpu
+    - code
+  license: inf
+  description: |
+    The model is a quantized version of infly/OpenCoder-8B-Base created using llama.cpp. It is part of the OpenCoder LLM family which includes 1.5B and 8B base and chat models, supporting both English and Chinese languages. The original OpenCoder model was pretrained on 2.5 trillion tokens composed of 90% raw code and 10% code-related web data, and supervised finetuned on over 4.5M high-quality SFT examples. It achieves high performance across multiple language model benchmarks and is one of the most comprehensively open-sourced models available.
+  overrides:
+    parameters:
+      model: OpenCoder-8B-Base.Q4_K_M.gguf
+  files:
+    - filename: OpenCoder-8B-Base.Q4_K_M.gguf
+      sha256: ed158a6f72a40cf4f3f4569f649b365f5851e93f03b56252af3906515fab94ec
+      uri: huggingface://QuantFactory/OpenCoder-8B-Base-GGUF/OpenCoder-8B-Base.Q4_K_M.gguf
+- !!merge <<: *opencoder
+  url: "github:mudler/LocalAI/gallery/hermes-2-pro-mistral.yaml@master"
+  name: "opencoder-8b-instruct"
+  urls:
+    - https://huggingface.co/infly/OpenCoder-8B-Instruct
+    - https://huggingface.co/QuantFactory/OpenCoder-8B-Instruct-GGUF
+  description: |
+    The LLM model is QuantFactory/OpenCoder-8B-Instruct-GGUF, which is a quantized version of infly/OpenCoder-8B-Instruct. It is created using llama.cpp and supports both English and Chinese languages. The original model, infly/OpenCoder-8B-Instruct, is pretrained on 2.5 trillion tokens composed of 90% raw code and 10% code-related web data, and supervised finetuned on over 4.5M high-quality SFT examples. It achieves high performance across multiple language model benchmarks and is one of the leading open-source models for code.
+  overrides:
+    parameters:
+      model: OpenCoder-8B-Instruct.Q4_K_M.gguf
+  files:
+    - filename: OpenCoder-8B-Instruct.Q4_K_M.gguf
+      sha256: ae642656f127e339fcb9566e6039a73cc55d34e3bf59e067d58ad40742f49f00
+      uri: huggingface://QuantFactory/OpenCoder-8B-Instruct-GGUF/OpenCoder-8B-Instruct.Q4_K_M.gguf
+- !!merge <<: *opencoder
+  name: "opencoder-1.5b-base"
+  urls:
+    - https://huggingface.co/infly/OpenCoder-1.5B-Base
+    - https://huggingface.co/QuantFactory/OpenCoder-1.5B-Base-GGUF
+  description: |
+    The model is a large language model with 1.5 billion parameters, trained on 2.5 trillion tokens of code-related data. It supports both English and Chinese languages and is part of the OpenCoder LLM family which also includes 8B base and chat models. The model achieves high performance across multiple language model benchmarks and is one of the most comprehensively open-sourced models available.
+  overrides:
+    parameters:
+      model: OpenCoder-1.5B-Base.Q4_K_M.gguf
+  files:
+    - filename: OpenCoder-1.5B-Base.Q4_K_M.gguf
+      sha256: fb69a2849971b69f3fa1e64a17d1e4d3e1d0d3733d43ae8645299d07ab855af5
+      uri: huggingface://QuantFactory/OpenCoder-1.5B-Base-GGUF/OpenCoder-1.5B-Base.Q4_K_M.gguf
+- !!merge <<: *opencoder
+  name: "opencoder-1.5b-instruct"
+  url: "github:mudler/LocalAI/gallery/hermes-2-pro-mistral.yaml@master"
+  urls:
+    - https://huggingface.co/QuantFactory/OpenCoder-1.5B-Instruct-GGUF
+  description: |
+    The model is a quantized version of [infly/OpenCoder-1.5B-Instruct](https://huggingface.co/infly/OpenCoder-1.5B-Instruct) created using llama.cpp. The original model, infly/OpenCoder-1.5B-Instruct, is an open and reproducible code LLM family which includes 1.5B and 8B base and chat models, supporting both English and Chinese languages. The model is pretrained on 2.5 trillion tokens composed of 90% raw code and 10% code-related web data, and supervised finetuned on over 4.5M high-quality SFT examples. It achieves high performance across multiple language model benchmarks, positioning it among the leading open-source models for code.
+  overrides:
+    parameters:
+      model: OpenCoder-1.5B-Instruct.Q4_K_M.gguf
+  files:
+    - filename: OpenCoder-1.5B-Instruct.Q4_K_M.gguf
+      sha256: a34128fac79e05a3a92c3fd2245cfce7c3876c60241ec2565c24e74b36f48d56
+      uri: huggingface://QuantFactory/OpenCoder-1.5B-Instruct-GGUF/OpenCoder-1.5B-Instruct.Q4_K_M.gguf
 - &granite3
   name: "granite-3.0-1b-a400m-instruct"
   urls:
@@ -879,6 +945,41 @@
     - filename: EVA-Qwen2.5-14B-v0.2-Q4_K_M.gguf
       sha256: 5d79bc8bf486c48c6430621a5bc5d3032227532dae436a27aa23aaf3e618e009
       uri: huggingface://bartowski/EVA-Qwen2.5-14B-v0.2-GGUF/EVA-Qwen2.5-14B-v0.2-Q4_K_M.gguf
+- !!merge <<: *qwen25
+  name: "tissint-14b-128k-rp"
+  urls:
+    - https://huggingface.co/Ttimofeyka/Tissint-14B-128k-RP
+    - https://huggingface.co/mradermacher/Tissint-14B-128k-RP-GGUF
+  description: |
+    The model is based on SuperNova-Medius (as the current best 14B model) with a 128k context with an emphasis on creativity, including NSFW and multi-turn conversations.
+  overrides:
+    parameters:
+      model: Tissint-14B-128k-RP.Q4_K_M.gguf
+  files:
+    - filename: Tissint-14B-128k-RP.Q4_K_M.gguf
+      sha256: 374c02f69fae47e7d78ffed9fad4e405250d31031a6bc1539b136c4b1cfc85c2
+      uri: huggingface://mradermacher/Tissint-14B-128k-RP-GGUF/Tissint-14B-128k-RP.Q4_K_M.gguf
+- !!merge <<: *qwen25
+  name: "tq2.5-14b-sugarquill-v1"
+  icon: https://huggingface.co/allura-org/TQ2.5-14B-Sugarquill-v1/resolve/main/card_img.png
+  urls:
+    - https://huggingface.co/allura-org/TQ2.5-14B-Sugarquill-v1
+    - https://huggingface.co/bartowski/TQ2.5-14B-Sugarquill-v1-GGUF
+  description: |
+    A continued pretrain of SuperNova-Medius on assorted short story data from the web. Supernova already had a nice prose, but diversifying it a bit definitely doesn't hurt. Also, finally a storywriter model with enough context for something more than a short story, that's also nice.
+
+    It's a fair bit more temperamental than Gemma, but can be tamed with some sampling. Instruction following also stayed rather strong, so it works for both RP and storywriting, both in chat mode via back-and-forth co-writing and on raw completion.
+
+    Overall, I'd say it successfully transfers the essence of what I liked about Gemma Sugarquill. I will also make a Qwen version of Aletheia, but with a brand new LoRA, based on a brand new RP dataset that's in the making right now.
+
+    Model was trained by Auri.
+  overrides:
+    parameters:
+      model: TQ2.5-14B-Sugarquill-v1-Q4_K_M.gguf
+  files:
+    - filename: TQ2.5-14B-Sugarquill-v1-Q4_K_M.gguf
+      sha256: a654fe3f41e963d8ea6753fb9a06b9dd76893714ebf02605ef67827944a4025e
+      uri: huggingface://bartowski/TQ2.5-14B-Sugarquill-v1-GGUF/TQ2.5-14B-Sugarquill-v1-Q4_K_M.gguf
 - &archfunct
   license: apache-2.0
   tags:
