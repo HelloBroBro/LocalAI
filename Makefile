@@ -8,7 +8,7 @@ DETECT_LIBS?=true
 # llama.cpp versions
 GOLLAMA_REPO?=https://github.com/go-skynet/go-llama.cpp
 GOLLAMA_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=883d206fbd2c5b2b9b589a9328503b9005e146c9
+CPPLLAMA_VERSION?=db4cfd5dbc31c90f0d5c413a2e182d068b8ee308
 
 # go-rwkv version
 RWKV_REPO?=https://github.com/donomii/go-rwkv.cpp
@@ -775,7 +775,7 @@ backend-assets/grpc/llama-cpp-hipblas: backend-assets/grpc backend/cpp/llama/lla
 	cp -rf backend/cpp/llama backend/cpp/llama-hipblas
 	$(MAKE) -C backend/cpp/llama-hipblas purge
 	$(info ${GREEN}I llama-cpp build info:hipblas${RESET})
-	BUILD_TYPE="hipblas" $(MAKE) VARIANT="llama-hipblas" build-llama-cpp-grpc-server
+	CMAKE_ARGS="$(CMAKE_ARGS) -DGGML_AVX=off -DGGML_AVX2=off -DGGML_AVX512=off -DGGML_FMA=off -DGGML_F16C=off" BUILD_TYPE="hipblas" $(MAKE) VARIANT="llama-hipblas" build-llama-cpp-grpc-server
 	cp -rfv backend/cpp/llama-hipblas/grpc-server backend-assets/grpc/llama-cpp-hipblas
 
 backend-assets/grpc/llama-cpp-sycl_f16: backend-assets/grpc backend/cpp/llama/llama.cpp
