@@ -8,7 +8,7 @@ DETECT_LIBS?=true
 # llama.cpp versions
 GOLLAMA_REPO?=https://github.com/go-skynet/go-llama.cpp
 GOLLAMA_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=ce2e59ba107cf71ed566040ff20a15d1c58e09c2
+CPPLLAMA_VERSION?=d3481e631661b5e9517f78908cdd58cee63c4903
 
 # go-rwkv version
 RWKV_REPO?=https://github.com/donomii/go-rwkv.cpp
@@ -16,7 +16,7 @@ RWKV_VERSION?=661e7ae26d442f5cfebd2a0881b44e8c55949ec6
 
 # whisper.cpp version
 WHISPER_REPO?=https://github.com/ggerganov/whisper.cpp
-WHISPER_CPP_VERSION?=01d3bd7d5ccd1956a7ddf1b57ee92d69f35aad93
+WHISPER_CPP_VERSION?=6266a9f9e56a5b925e9892acf650f3eb1245814d
 
 # bert.cpp version
 BERT_REPO?=https://github.com/go-skynet/go-bert.cpp
@@ -897,7 +897,7 @@ docker-aio-all:
 
 docker-image-intel:
 	docker build \
-		--build-arg BASE_IMAGE=intel/oneapi-basekit:2024.2.0-devel-ubuntu22.04 \
+		--build-arg BASE_IMAGE=intel/oneapi-basekit:2025.0.0-0-devel-ubuntu22.04 \
 		--build-arg IMAGE_TYPE=$(IMAGE_TYPE) \
 		--build-arg GO_TAGS="none" \
 		--build-arg MAKEFLAGS="$(DOCKER_MAKEFLAGS)" \
@@ -905,7 +905,7 @@ docker-image-intel:
 
 docker-image-intel-xpu:
 	docker build \
-		--build-arg BASE_IMAGE=intel/oneapi-basekit:2024.2.0-devel-ubuntu22.04 \
+		--build-arg BASE_IMAGE=intel/oneapi-basekit:2025.0.0-0-devel-ubuntu22.04 \
 		--build-arg IMAGE_TYPE=$(IMAGE_TYPE) \
 		--build-arg GO_TAGS="none" \
 		--build-arg MAKEFLAGS="$(DOCKER_MAKEFLAGS)" \
