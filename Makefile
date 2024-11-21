@@ -8,7 +8,7 @@ DETECT_LIBS?=true
 # llama.cpp versions
 GOLLAMA_REPO?=https://github.com/go-skynet/go-llama.cpp
 GOLLAMA_VERSION?=2b57a8ae43e4699d3dc5d1496a1ccd42922993be
-CPPLLAMA_VERSION?=d3481e631661b5e9517f78908cdd58cee63c4903
+CPPLLAMA_VERSION?=9abe9eeae98b11fa93b82632b264126a010225ff
 
 # go-rwkv version
 RWKV_REPO?=https://github.com/donomii/go-rwkv.cpp
@@ -33,6 +33,10 @@ STABLEDIFFUSION_VERSION?=4a3cd6aeae6f66ee57eae9a0075f8c58c3a6a38f
 # tinydream version
 TINYDREAM_REPO?=https://github.com/M0Rf30/go-tiny-dream
 TINYDREAM_VERSION?=c04fa463ace9d9a6464313aa5f9cd0f953b6c057
+
+ONNX_VERSION?=1.20.0
+ONNX_ARCH?=x64
+ONNX_OS?=linux
 
 export BUILD_TYPE?=
 export STABLE_BUILD_TYPE?=$(BUILD_TYPE)
@@ -89,7 +93,20 @@ ifeq ($(NATIVE),false)
 	CMAKE_ARGS+=-DGGML_NATIVE=OFF
 endif
 
+# Detect if we are running on arm64
+ifneq (,$(findstring aarch64,$(shell uname -m)))
+	ONNX_ARCH=aarch64
+endif
+
 ifeq ($(OS),Darwin)
+	ONNX_OS=osx
+	ifneq (,$(findstring aarch64,$(shell uname -m)))
+		ONNX_ARCH=arm64
+	else ifneq (,$(findstring arm64,$(shell uname -m)))
+		ONNX_ARCH=arm64
+	else
+		ONNX_ARCH=x86_64
+	endif
 
 	ifeq ($(OSX_SIGNING_IDENTITY),)
 		OSX_SIGNING_IDENTITY := $(shell security find-identity -v -p codesigning | grep '"' | head -n 1 | sed -E 's/.*"(.*)"/\1/')
@@ -195,6 +212,7 @@ ALL_GRPC_BACKENDS+=backend-assets/util/llama-cpp-rpc-server
 ALL_GRPC_BACKENDS+=backend-assets/grpc/rwkv
 ALL_GRPC_BACKENDS+=backend-assets/grpc/whisper
 ALL_GRPC_BACKENDS+=backend-assets/grpc/local-store
+ALL_GRPC_BACKENDS+=backend-assets/grpc/silero-vad
 ALL_GRPC_BACKENDS+=$(OPTIONAL_GRPC)
 # Use filter-out to remove the specified backends
 ALL_GRPC_BACKENDS := $(filter-out $(SKIP_GRPC_BACKEND),$(ALL_GRPC_BACKENDS))
@@ -280,6 +298,20 @@ sources/go-stable-diffusion:
 
 sources/go-stable-diffusion/libstablediffusion.a: sources/go-stable-diffusion
 	CPATH="$(CPATH):/usr/include/opencv4" $(MAKE) -C sources/go-stable-diffusion libstablediffusion.a
+
+sources/onnxruntime:
+	mkdir -p sources/onnxruntime
+	curl -L https://github.com/microsoft/onnxruntime/releases/download/v$(ONNX_VERSION)/onnxruntime-$(ONNX_OS)-$(ONNX_ARCH)-$(ONNX_VERSION).tgz -o sources/onnxruntime/onnxruntime-$(ONNX_OS)-$(ONNX_ARCH)-$(ONNX_VERSION).tgz
+	cd sources/onnxruntime && tar -xvf onnxruntime-$(ONNX_OS)-$(ONNX_ARCH)-$(ONNX_VERSION).tgz && rm onnxruntime-$(ONNX_OS)-$(ONNX_ARCH)-$(ONNX_VERSION).tgz
+	cd sources/onnxruntime && mv onnxruntime-$(ONNX_OS)-$(ONNX_ARCH)-$(ONNX_VERSION)/* ./
+
+backend-assets/lib/libonnxruntime.so.1: backend-assets/lib sources/onnxruntime
+	cp -rfv sources/onnxruntime/lib/* backend-assets/lib/
+ifeq ($(OS),Darwin)
+	mv backend-assets/lib/libonnxruntime.$(ONNX_VERSION).dylib backend-assets/lib/libonnxruntime.dylib
+else
+	mv backend-assets/lib/libonnxruntime.so.$(ONNX_VERSION) backend-assets/lib/libonnxruntime.so.1
+endif
 
 ## tiny-dream
 sources/go-tiny-dream:
@@ -835,6 +867,13 @@ backend-assets/grpc/stablediffusion: sources/go-stable-diffusion sources/go-stab
 	$(GOCMD) build -ldflags "$(LD_FLAGS)" -tags "$(GO_TAGS)" -o backend-assets/grpc/stablediffusion ./backend/go/image/stablediffusion
 ifneq ($(UPX),)
 	$(UPX) backend-assets/grpc/stablediffusion
+endif
+
+backend-assets/grpc/silero-vad: backend-assets/grpc backend-assets/lib/libonnxruntime.so.1
+	CGO_LDFLAGS="$(CGO_LDFLAGS)" CPATH="$(CPATH):$(CURDIR)/sources/onnxruntime/include/" LIBRARY_PATH=$(CURDIR)/backend-assets/lib \
+	$(GOCMD) build -ldflags "$(LD_FLAGS)" -tags "$(GO_TAGS)" -o backend-assets/grpc/silero-vad ./backend/go/vad/silero
+ifneq ($(UPX),)
+	$(UPX) backend-assets/grpc/silero-vad
 endif
 
 backend-assets/grpc/tinydream: sources/go-tiny-dream sources/go-tiny-dream/libtinydream.a backend-assets/grpc
