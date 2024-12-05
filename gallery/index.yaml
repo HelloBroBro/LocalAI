@@ -1750,6 +1750,47 @@
     - filename: Qwen2.5-7B-HomerCreative-Mix.Q4_K_M.gguf
       sha256: fc3fdb41e068646592f89a8ae62d7b330f2bd4e97bf615aef2977930977c8ba5
       uri: huggingface://QuantFactory/Qwen2.5-7B-HomerCreative-Mix-GGUF/Qwen2.5-7B-HomerCreative-Mix.Q4_K_M.gguf
+- !!merge <<: *qwen25
+  name: "cybercore-qwen-2.1-7b"
+  urls:
+    - https://huggingface.co/bunnycore/CyberCore-Qwen-2.1-7B
+    - https://huggingface.co/QuantFactory/CyberCore-Qwen-2.1-7B-GGUF
+  description: |
+    This model was merged using the TIES merge method using rombodawg/Rombos-LLM-V2.5-Qwen-7b as a base.
+    Models Merged
+    fblgit/cybertron-v4-qw7B-UNAMGS + bunnycore/Qwen-2.1-7b-Persona-lora_model
+    fblgit/cybertron-v4-qw7B-MGS + bunnycore/Qwen-2.1-7b-Persona-lora_model
+  overrides:
+    parameters:
+      model: CyberCore-Qwen-2.1-7B.Q4_K_M.gguf
+  files:
+    - filename: CyberCore-Qwen-2.1-7B.Q4_K_M.gguf
+      sha256: 726042707a4cec29ca0355b4dc7c53a807b307d08aa8a3d4a9e76aefbbbcaadf
+      uri: huggingface://QuantFactory/CyberCore-Qwen-2.1-7B-GGUF/CyberCore-Qwen-2.1-7B.Q4_K_M.gguf
+- !!merge <<: *qwen25
+  name: "homercreativeanvita-mix-qw7b"
+  icon: https://huggingface.co/suayptalha/HomerCreativeAnvita-Mix-Qw7B/resolve/main/HomerCreativeAnvita.jpeg
+  urls:
+    - https://huggingface.co/suayptalha/HomerCreativeAnvita-Mix-Qw7B
+    - https://huggingface.co/QuantFactory/HomerCreativeAnvita-Mix-Qw7B-GGUF
+  description: |
+    This model is currently ranked #1 on the Open LLM Leaderboard among models up to 13B parameters!
+    Merge Method
+
+    This model was merged using the SLERP merge method.
+    Models Merged
+
+    The following models were included in the merge:
+
+        ZeroXClem/Qwen2.5-7B-HomerAnvita-NerdMix
+        ZeroXClem/Qwen2.5-7B-HomerCreative-Mix
+  overrides:
+    parameters:
+      model: HomerCreativeAnvita-Mix-Qw7B.Q4_K_M.gguf
+  files:
+    - filename: HomerCreativeAnvita-Mix-Qw7B.Q4_K_M.gguf
+      sha256: a356f279a104bff0bbc2ef7ec136c1e774153de8893bf988083e96fb7f4bc053
+      uri: huggingface://QuantFactory/HomerCreativeAnvita-Mix-Qw7B-GGUF/HomerCreativeAnvita-Mix-Qw7B.Q4_K_M.gguf
 - &archfunct
   license: apache-2.0
   tags:
@@ -4172,6 +4213,23 @@
     - filename: magnum-12b-v2.5-kto.i1-Q4_K_M.gguf
       sha256: 07e91d2c6d4e42312e65a69c54f16be467575f7a596fe052993b388e38b90d76
       uri: huggingface://mradermacher/magnum-12b-v2.5-kto-i1-GGUF/magnum-12b-v2.5-kto.i1-Q4_K_M.gguf
+- !!merge <<: *mistral03
+  url: "github:mudler/LocalAI/gallery/chatml.yaml@master"
+  name: "chatty-harry_v3.0"
+  icon: https://cdn-uploads.huggingface.co/production/uploads/66c1cc08453a7ef6c5fe657a/0KzNTEtn2kJJQsw4lQeY0.png
+  urls:
+    - https://huggingface.co/Triangle104/Chatty-Harry_V3.0
+    - https://huggingface.co/QuantFactory/Chatty-Harry_V3.0-GGUF
+  description: |
+    This model was merged using the TIES merge method using Triangle104/ChatWaifu_Magnum_V0.2 as a base.
+    The following models were included in the merge: elinas/Chronos-Gold-12B-1.0
+  overrides:
+    parameters:
+      model: Chatty-Harry_V3.0.Q4_K_M.gguf
+  files:
+    - filename: Chatty-Harry_V3.0.Q4_K_M.gguf
+      sha256: 54b63bb74498576ca77b801ed096657a93cc2f6b71d707c3605fdb394bd3e622
+      uri: huggingface://QuantFactory/Chatty-Harry_V3.0-GGUF/Chatty-Harry_V3.0.Q4_K_M.gguf
 - &mudler
   ### START mudler's LocalAI specific-models
   url: "github:mudler/LocalAI/gallery/mudler.yaml@master"
@@ -8848,6 +8906,43 @@
   overrides:
     parameters:
       model: black-forest-labs/FLUX.1-schnell
+- name: flux.1-dev-ggml
+  license: flux-1-dev-non-commercial-license
+  url: "github:mudler/LocalAI/gallery/flux-ggml.yaml@master"
+  description: |
+    FLUX.1 [dev] is a 12 billion parameter rectified flow transformer capable of generating images from text descriptions. For more information, please read our blog post.
+    Key Features
+        Cutting-edge output quality, second only to our state-of-the-art model FLUX.1 [pro].
+        Competitive prompt following, matching the performance of closed source alternatives .
+        Trained using guidance distillation, making FLUX.1 [dev] more efficient.
+        Open weights to drive new scientific research, and empower artists to develop innovative workflows.
+        Generated outputs can be used for personal, scientific, and commercial purposes as described in the flux-1-dev-non-commercial-license.
+    This model is quantized with GGUF
+  urls:
+    - https://huggingface.co/black-forest-labs/FLUX.1-dev
+    - https://huggingface.co/city96/FLUX.1-dev-gguf
+  tags:
+    - text-to-image
+    - flux
+    - gpu
+    - cpu
+  icon: https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/schnell_grid.jpeg
+  overrides:
+    parameters:
+      model: flux1-dev-Q2_K.gguf
+  files:
+    - filename: "flux1-dev-Q2_K.gguf"
+      sha256: "b8c464bc0f10076ef8f00ba040d220d90c7993f7c4245ae80227d857f65df105"
+      uri: "huggingface://city96/FLUX.1-dev-gguf/flux1-dev-Q2_K.gguf"
+    - filename: ae.safetensors
+      sha256: afc8e28272cd15db3919bacdb6918ce9c1ed22e96cb12c4d5ed0fba823529e38
+      uri: https://huggingface.co/ChuckMcSneed/FLUX.1-dev/resolve/main/ae.safetensors
+    - filename: clip_l.safetensors
+      sha256: 660c6f5b1abae9dc498ac2d21e1347d2abdb0cf6c0c0c8576cd796491d9a6cdd
+      uri: https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors
+    - filename: t5xxl_fp16.safetensors
+      sha256: 6e480b09fae049a72d2a8c5fbccb8d3e92febeb233bbe9dfe7256958a9167635
+      uri: https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors
 - &whisper
   ## Whisper
   url: "github:mudler/LocalAI/gallery/whisper-base.yaml@master"
@@ -9633,3 +9728,22 @@
     - filename: silero-vad.onnx
       uri: https://huggingface.co/onnx-community/silero-vad/resolve/main/onnx/model.onnx
       sha256: a4a068cd6cf1ea8355b84327595838ca748ec29a25bc91fc82e6c299ccdc5808
+- name: "bark-cpp-small"
+  url: github:mudler/LocalAI/gallery/virtual.yaml@master
+  license: mit
+  urls:
+    - https://huggingface.co/suno/bark
+    - https://huggingface.co/Green-Sky/bark-ggml
+  description: |
+    Bark is a transformer-based text-to-audio model created by Suno. Bark can generate highly realistic, multilingual speech as well as other audio - including music, background noise and simple sound effects. The model can also produce nonverbal communications like laughing, sighing and crying. To support the research community, we are providing access to pretrained model checkpoints ready for inference.
+  tags:
+    - tts
+    - cpu
+  overrides:
+    backend: bark-cpp
+    parameters:
+      model: bark-small_weights-f16.bin
+  files:
+    - filename: bark-small_weights-f16.bin
+      uri: https://huggingface.co/Green-Sky/bark-ggml/resolve/main/bark-small_weights-f16.bin
+      sha256: de1ece17e8319537b3a7909baebbd28affab23c942d5d57e648d622af4e2feaa
